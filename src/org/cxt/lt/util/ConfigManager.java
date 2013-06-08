@@ -63,20 +63,20 @@ public class ConfigManager {
 	}
 
 	public static String getString(String key) {
-		
+
 		checkInit();
-		
+
 		LT.notNull(sConfigMap);
 		String ret = (String) sConfigMap.get(key);
 		LT.notNull(ret);
+		LT.assertTrue(!"".equals(ret.trim()));
 		return ret;
 	}
 
 	public static int getInt(String key) {
-		
+
 		checkInit();
 
-		
 		String retStr = getString(key);
 		Integer ret = Integer.valueOf(retStr);
 		return ret;

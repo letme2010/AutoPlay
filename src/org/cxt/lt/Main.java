@@ -41,7 +41,7 @@ public class Main {
 				LtRobot.getInstance().pressTab();
 				LtRobot.getInstance().delay(500);
 
-				setCopyBoardText(ConfigManager
+				setCopyBoardText(SecureConfigManager
 						.getString("SIMPLAY_LOGIN_USER_PASSWORD"));
 				LtRobot.getInstance().pressCtrlV();
 				LtRobot.getInstance().delay(500);
@@ -52,16 +52,16 @@ public class Main {
 				break;
 
 			case UIFlagManager.SCRIPT_LIB: {
-				LtRobot.getInstance().leftClick(136, 70);
+				LtRobot.getInstance().leftClickInMainWindow(136, 70);
 			}
 				break;
 			case UIFlagManager.COLLECTION: {
-				LtRobot.getInstance().leftClick(84, 243);
+				LtRobot.getInstance().leftClickInMainWindow(84, 243);
 			}
 				break;
 
 			case UIFlagManager.OPEN_SCRIPT: {
-				LtRobot.getInstance().leftClick(658, 155);
+				LtRobot.getInstance().leftClickInMainWindow(658, 155);
 			}
 				break;
 
@@ -82,6 +82,21 @@ public class Main {
 
 			case UIFlagManager.DIALOG_MODE_TIPS: {
 				LtRobot.getInstance().pressEnter();
+			}
+				break;
+
+			case UIFlagManager.SELECTE_SCRIPT: {
+				LtRobot.getInstance().leftClickInMainWindow(58, 141);
+			}
+				break;
+
+			case UIFlagManager.S_WORD_START: {
+				LtRobot.getInstance().leftClickInMainWindow(558, 168);
+			}
+				break;
+
+			case UIFlagManager.SCRIPT_SD_GUNDAM: {
+				LtRobot.getInstance().leftClickInMainWindow(368, 236);
 			}
 				break;
 
@@ -154,7 +169,7 @@ public class Main {
 
 		Runtime.getRuntime().exec(ConfigManager.getString("SIMPLE_PLAY_PATH"));
 
-		// invork action.
+		// execute action.
 
 		UIFlagManager.addListener(sOnFladDetetedListener);
 
@@ -162,34 +177,61 @@ public class Main {
 
 		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_LIB);
 
-		UIFlagManager.invorkDetect(UIFlagManager.COLLECTION);
+		UIFlagManager.invorkDetect(UIFlagManager.SELECTE_SCRIPT);
 
-		UIFlagManager.invorkDetect(UIFlagManager.OPEN_SCRIPT);
+		UIFlagManager.invorkDetect(UIFlagManager.S_WORD_START);
 
-		UIFlagManager.invorkDetect(UIFlagManager.DIALOG1);
+		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SD_GUNDAM);
 
-		UIFlagManager.invorkDetect(UIFlagManager.DIALOG2);
+		BufferedImage flagImage = UIFlagManager
+				.getImage("OPEN_SCRIPT_GREEN_BUTTON");
 
-		UIFlagManager.invorkDetect(UIFlagManager.DIALOG3);
+		BufferedImage tagScriptImage = UIFlagManager
+				.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND");
 
-		UIFlagManager.invorkDetect(UIFlagManager.DIALOG_MODE_TIPS);
+		LT.assertTrue(null != flagImage);
 
-		{
-			Thread.sleep(3000);
+		for (int top = 204; top <= 530; ++top) {
 
-			BufferedImage image = LtRobot
-					.getInstance()
-					.screenShot(
-							new FlagWrap(
-									228,
-									404,
-									445,
-									436,
-									OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
-									""));
+			int bottom = top + (227 - 216);
 
-			Util.saveImageToDefaultFile(image);
+			FlagWrap flagWrap = new FlagWrap(684, top, 706, bottom,
+					OffsetType.SIMPLAY_MAIN_WINDOW, "");
+
+			BufferedImage image = LtRobot.getInstance().screenShot(flagWrap);
+
+			if (Util.compareImageBinary(image, flagImage)) {
+				System.out.println(flagWrap.toString());
+
+				LtRobot.getInstance().leftClick(flagWrap.getLeft() - 150,
+						flagWrap.getTop() + 8);
+
+				BufferedImage scriptImage = LtRobot.getInstance().screenShot(
+						flagWrap.getLeft() - 530, flagWrap.getTop(),
+						flagWrap.getLeft() - 165, flagWrap.getTop() + 20);
+
+				if (Util.compareImageBinary(scriptImage, tagScriptImage)) {
+					LtRobot.getInstance().leftClick(flagWrap.getLeft(),
+							flagWrap.getTop() + 4);
+					System.out.println("see tag.");
+					break;
+				}
+
+			}
+
 		}
+
+		
+		
+		 {
+		 Thread.sleep(3000);
+		
+		 BufferedImage image = LtRobot.getInstance().screenShot(
+		 new FlagWrap(527,156,581,170,
+		 OffsetType.SIMPLAY_MAIN_WINDOW, ""));
+		
+		 Util.saveImageToDefaultFile(image);
+		 }
 
 		System.out.println("success");
 
@@ -213,15 +255,15 @@ public class Main {
 			Thread.sleep(10000);
 
 			// // script lib
-			LtRobot.getInstance().leftClick(136, 70);
+			LtRobot.getInstance().leftClickInMainWindow(136, 70);
 			Thread.sleep(1000);
 
 			// my collection
-			LtRobot.getInstance().leftClick(84, 243);
+			LtRobot.getInstance().leftClickInMainWindow(84, 243);
 			Thread.sleep(1000);
 
 			// open script
-			LtRobot.getInstance().leftClick(658, 155);
+			LtRobot.getInstance().leftClickInMainWindow(658, 155);
 			Thread.sleep(1000);
 
 			// // wait load script.
@@ -232,7 +274,7 @@ public class Main {
 			LtRobot.getInstance().pressEnter();
 			LtRobot.getInstance().pressEnter();
 
-			LtRobot.getInstance().leftClick(340, 420);
+			LtRobot.getInstance().leftClickInMainWindow(340, 420);
 			Thread.sleep(1000);
 
 			LtRobot.getInstance().pressEnter();
@@ -261,7 +303,7 @@ public class Main {
 			LtRobot.getInstance().pressDelete();
 			Thread.sleep(500);
 
-			setCopyBoardText(ConfigManager.getString("SD_LOGIN_PASSWORD"));
+			setCopyBoardText(SecureConfigManager.getString("SD_LOGIN_PASSWORD"));
 			LtRobot.getInstance().pressCtrlV();
 			Thread.sleep(500);
 

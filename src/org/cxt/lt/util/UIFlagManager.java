@@ -26,6 +26,9 @@ public class UIFlagManager {
 	public static final int DIALOG2 = 6;
 	public static final int DIALOG3 = 7;
 	public static final int DIALOG_MODE_TIPS = 8;
+	public static final int SELECTE_SCRIPT = 9;
+	public static final int S_WORD_START = 10;
+	public static final int SCRIPT_SD_GUNDAM = 11;
 
 	static {
 
@@ -52,6 +55,15 @@ public class UIFlagManager {
 
 		sMap.put(DIALOG_MODE_TIPS, new FlagWrap(293, 276, 530, 294,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "DIALOG_MODE_TIPS"));
+
+		sMap.put(SELECTE_SCRIPT, new FlagWrap(30, 130, 83, 149,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "SELECTE_SCRIPT"));
+
+		sMap.put(S_WORD_START, new FlagWrap(550, 159, 565, 175,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "S_WORD_START"));
+
+		sMap.put(SCRIPT_SD_GUNDAM, new FlagWrap(337, 226, 394, 246,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "SCRIPT_SD_GUNDAM"));
 	}
 
 	private static final List<OnFladDetetedListener> sListenerList = new ArrayList<OnFladDetetedListener>();
@@ -85,7 +97,7 @@ public class UIFlagManager {
 			BufferedImage image = LtRobot.getInstance().screenShot(flagWrap);
 			BufferedImage flag = UIFlagManager.getImage(flagWrap.getFlagKey());
 
-			if (Util.compareImage(image, flag)) {
+			if (Util.compareImageBinary(image, flag)) {
 
 				break;
 			} else {
@@ -107,7 +119,7 @@ public class UIFlagManager {
 		}
 	}
 
-	private static BufferedImage getImage(String aFlagName) {
+	public static BufferedImage getImage(String aFlagName) {
 		LT.assertTrue(null != aFlagName);
 
 		File file = new File(ConfigManager.getString("UI_WAIT_FLAG_FOLDER"),
@@ -238,6 +250,13 @@ public class UIFlagManager {
 
 		public String getFlagKey() {
 			return mFlagKey;
+		}
+
+		public String toString() {
+
+			return "[" + this.getLeft() + "," + this.getTop() + ","
+					+ this.getRight() + "," + this.getBottom() + "]";
+
 		}
 
 	}

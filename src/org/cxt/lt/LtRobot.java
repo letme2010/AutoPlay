@@ -47,7 +47,7 @@ public class LtRobot {
 	 */
 	public void delay(int i) {
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(i);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -61,21 +61,23 @@ public class LtRobot {
 			e.printStackTrace();
 		}
 
-		Point leftTopOffset = this.getLeftTopOffset();
-
-		this.mRobot.mouseMove(leftTopOffset.x + x, leftTopOffset.y + y);
+		this.mRobot.mouseMove(x, y);
 		this.mRobot.mousePress(InputEvent.BUTTON1_MASK);
 		this.mRobot.mouseRelease(InputEvent.BUTTON1_MASK);
 
 	}
 
+	public void leftClickInMainWindow(int x, int y) {
+
+		Point leftTopOffset = LtRobot.getLeftTopOffset();
+		this.leftClick(leftTopOffset.x + x, leftTopOffset.y + y);
+
+	}
+
 	public void leftClickInScriptUI(int x, int y) {
 
-		Point leftTopOffset = this.getLeftTopScriptUIOffset();
-
-		this.mRobot.mouseMove(leftTopOffset.x + x, leftTopOffset.y + y);
-		this.mRobot.mousePress(InputEvent.BUTTON1_MASK);
-		this.mRobot.mouseRelease(InputEvent.BUTTON1_MASK);
+		Point leftTopOffset = LtRobot.getLeftTopScriptUIOffset();
+		this.leftClick(leftTopOffset.x + x, leftTopOffset.y + y);
 	}
 
 	public void keyPress(int key) {
@@ -202,7 +204,7 @@ public class LtRobot {
 
 	public BufferedImage screenShot(int left, int top, int right, int bottom) {
 		this.showShotWaitRect(left, top, right, bottom);
-		this.delay(1000);
+		this.delay(10);
 		this.hideRect();
 
 		return this._screenShot(left, top, right, bottom);
