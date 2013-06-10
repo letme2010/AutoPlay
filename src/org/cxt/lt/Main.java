@@ -12,7 +12,7 @@ import org.cxt.lt.util.LT;
 import org.cxt.lt.util.SecureConfigManager;
 import org.cxt.lt.util.UIFlagManager;
 import org.cxt.lt.util.UIFlagManager.FlagWrap;
-import org.cxt.lt.util.UIFlagManager.OnFladDetetedListener;
+import org.cxt.lt.util.UIFlagManager.OnFlagDetetedListener;
 
 public class Main {
 
@@ -27,7 +27,7 @@ public class Main {
 		clip.setContents(tText, null);
 	}
 
-	private static final OnFladDetetedListener sOnFladDetetedListener = new OnFladDetetedListener() {
+	private static final OnFlagDetetedListener sOnFladDetetedListener = new OnFlagDetetedListener() {
 
 		@Override
 		public void onFlagDetetedSuccess(int aFlag, FlagWrap aFlagWrap) {
@@ -156,84 +156,129 @@ public class Main {
 			return;
 		}
 
-		// kill something...
-		Runtime.getRuntime().exec(
-				"taskkill /f /im "
-						+ ConfigManager.getString("SIMPLE_PLAY_PROCESS_NAME"));
-		Thread.sleep(1000);
+		if (true) {
 
-		Runtime.getRuntime().exec(
-				"taskkill /f /im "
-						+ ConfigManager.getString("RUNNER_PROCESS_NAME"));
-		Thread.sleep(1000);
+			// kill something...
 
-		Runtime.getRuntime().exec(ConfigManager.getString("SIMPLE_PLAY_PATH"));
+			Util.exec("taskkill /f /im "
+					+ ConfigManager.getString("SIMPLE_PLAY_PROCESS_NAME"));
+			Thread.sleep(1000);
 
-		// execute action.
+			Util.exec("taskkill /f /im "
+					+ ConfigManager.getString("RUNNER_PROCESS_NAME"));
+			Thread.sleep(1000);
 
-		UIFlagManager.addListener(sOnFladDetetedListener);
+			Util.exec(ConfigManager.getString("SIMPLE_PLAY_PATH"));
 
-		UIFlagManager.invorkDetect(UIFlagManager.LOGIN_WAIT_FLAG);
+			// execute action.
 
-		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_LIB);
+			UIFlagManager.addListener(sOnFladDetetedListener);
 
-		UIFlagManager.invorkDetect(UIFlagManager.SELECTE_SCRIPT);
+			UIFlagManager.invorkDetect(UIFlagManager.LOGIN_WAIT_FLAG);
 
-		UIFlagManager.invorkDetect(UIFlagManager.S_WORD_START);
+			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_LIB);
 
-		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SD_GUNDAM);
+			UIFlagManager.invorkDetect(UIFlagManager.SELECTE_SCRIPT);
 
-		BufferedImage flagImage = UIFlagManager
-				.getImage("OPEN_SCRIPT_GREEN_BUTTON");
+			UIFlagManager.invorkDetect(UIFlagManager.S_WORD_START);
 
-		BufferedImage tagScriptImage = UIFlagManager
+			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SD_GUNDAM);
+
+		}
+
+		LtRobot.getInstance().delay(3000);
+
+		BufferedImage greenButtonFlagImage = UIFlagManager
+				.getImage("OPEN_SCRIPT_GREEN_BUTTON2");
+		LT.assertTrue(null != greenButtonFlagImage);
+
+		BufferedImage scriptFlagImage = UIFlagManager
 				.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND");
 
-		LT.assertTrue(null != flagImage);
+		LT.assertTrue(null != scriptFlagImage);
 
-		for (int top = 204; top <= 530; ++top) {
+		int greenButtonLeft = 688;
+		int greenButtonRight = 717;
+		int scanGreenButtonTopLimit = 200;
+		int scanGreenButtonBottomLimit = 530;
 
-			int bottom = top + (227 - 216);
+		int scriptShotLeft = 688 - 544;
+		int scriptShotRight = 688 - 217;
+		int scriptShotTopLimit = scanGreenButtonTopLimit
+				+ LtRobot.getLeftTopOffset().y;
+		int scriptShotBottomLimit = scanGreenButtonBottomLimit
+				+ LtRobot.getLeftTopOffset().y;
 
-			FlagWrap flagWrap = new FlagWrap(684, top, 706, bottom,
-					OffsetType.SIMPLAY_MAIN_WINDOW, "");
+		for (int top = scriptShotTopLimit; top <= scriptShotBottomLimit; ++top) {
 
-			BufferedImage image = LtRobot.getInstance().screenShot(flagWrap);
+			if (true) {
+				// detect logic
 
-			if (Util.compareImageBinary(image, flagImage)) {
-				System.out.println(flagWrap.toString());
+				FlagWrap scriptShotFlagWrap = new FlagWrap(scriptShotLeft, top,
+						scriptShotRight,
+						top + greenButtonFlagImage.getHeight(),
+						OffsetType.SIMPLAY_MAIN_WINDOW, "");
 
-				LtRobot.getInstance().leftClick(flagWrap.getLeft() - 150,
-						flagWrap.getTop() + 8);
+				BufferedImage scriptShotImage = LtRobot.getInstance()
+						.screenShot(scriptShotFlagWrap);
 
-				BufferedImage scriptImage = LtRobot.getInstance().screenShot(
-						flagWrap.getLeft() - 530, flagWrap.getTop(),
-						flagWrap.getLeft() - 165, flagWrap.getTop() + 20);
+				// Util.saveImageToFile(scriptShotImage,
+				// "C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
 
-				if (Util.compareImageBinary(scriptImage, tagScriptImage)) {
-					LtRobot.getInstance().leftClick(flagWrap.getLeft(),
-							flagWrap.getTop() + 4);
-					System.out.println("see tag.");
+				if (Util.compareImage(scriptShotImage, scriptFlagImage)) {
+					System.out.println("find it.");
+
+					LtRobot.getInstance().leftClickInMainWindow(700,
+							scriptShotFlagWrap.getOriginTop() + 9);
+
 					break;
 				}
+			}
 
+			if (false) {
+				// use green button to get script image.
+				FlagWrap flagWrap = new FlagWrap(greenButtonLeft, top,
+						greenButtonRight, top
+								+ (greenButtonFlagImage.getHeight()),
+						OffsetType.SIMPLAY_MAIN_WINDOW, "");
+
+				BufferedImage shotImage = LtRobot.getInstance().screenShot(
+						flagWrap);
+
+				if (Util.compareImage(greenButtonFlagImage, shotImage)) {
+					// System.err.println(flagWrap);
+
+					FlagWrap scriptFlagWrap = new FlagWrap(
+							flagWrap.getOriginLeft() - 544,
+							flagWrap.getOriginTop(),
+							flagWrap.getOriginRight() - 217,
+							flagWrap.getOriginBottom(),
+							OffsetType.SIMPLAY_MAIN_WINDOW, "");
+
+					BufferedImage shotScriptImage = LtRobot.getInstance()
+							.screenShot(scriptFlagWrap);
+
+					Util.saveImageToFile(
+							shotScriptImage,
+							"C:\\Users\\letme2010\\Desktop\\t\\"
+									+ flagWrap.getTop() + ".png");
+
+				}
 			}
 
 		}
 
-		
-		
-		 {
-		 Thread.sleep(3000);
-		
-		 BufferedImage image = LtRobot.getInstance().screenShot(
-		 new FlagWrap(527,156,581,170,
-		 OffsetType.SIMPLAY_MAIN_WINDOW, ""));
-		
-		 Util.saveImageToDefaultFile(image);
-		 }
+		if (false) {
+			Thread.sleep(3000);
 
-		System.out.println("success");
+			BufferedImage image = LtRobot.getInstance().screenShot(
+					new FlagWrap(527, 156, 581, 170,
+							OffsetType.SIMPLAY_MAIN_WINDOW, ""));
+
+			Util.saveImageToDefaultFile(image);
+		}
+
+		System.out.println("finish.");
 
 		if (false) {
 

@@ -66,20 +66,20 @@ public class UIFlagManager {
 				OffsetType.SIMPLAY_MAIN_WINDOW, "SCRIPT_SD_GUNDAM"));
 	}
 
-	private static final List<OnFladDetetedListener> sListenerList = new ArrayList<OnFladDetetedListener>();
+	private static final List<OnFlagDetetedListener> sListenerList = new ArrayList<OnFlagDetetedListener>();
 
-	public static void addListener(OnFladDetetedListener aListener) {
+	public static void addListener(OnFlagDetetedListener aListener) {
 
 		LT.assertTrue(null != aListener);
 		sListenerList.add(aListener);
 	}
 
-	public static void removeListener(OnFladDetetedListener aListener) {
+	public static void removeListener(OnFlagDetetedListener aListener) {
 		LT.assertTrue(null != aListener);
 		sListenerList.remove(aListener);
 	}
 
-	public interface OnFladDetetedListener {
+	public interface OnFlagDetetedListener {
 		public void onFlagDetetedSuccess(int aFlag, FlagWrap aFlagWrap);
 
 		public void onFlagDetetedTimeOut(int aFlag, FlagWrap aFlagWrap);
@@ -114,7 +114,7 @@ public class UIFlagManager {
 		LtRobot.getInstance().delay(1000);
 		LtRobot.getInstance().hideRect();
 
-		for (OnFladDetetedListener listener : sListenerList) {
+		for (OnFlagDetetedListener listener : sListenerList) {
 			listener.onFlagDetetedSuccess(aFlag, flagWrap);
 		}
 	}
@@ -226,6 +226,22 @@ public class UIFlagManager {
 			}
 
 			return ret;
+		}
+
+		public int getOriginLeft() {
+			return this.mLeft;
+		}
+
+		public int getOriginRight() {
+			return this.mRight;
+		}
+
+		public int getOriginTop() {
+			return this.mTop;
+		}
+
+		public int getOriginBottom() {
+			return this.mBottom;
 		}
 
 		public int getLeft() {

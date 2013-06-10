@@ -96,8 +96,7 @@ public class LtRobot {
 	}
 
 	public static Point getLoginUILeftTopOffset() {
-		Point screenSize = Util.getScreenSize();
-		screenSize.y -= ConfigManager.getInt("BOTTOM_BAR_HEIGHT");
+		Point screenSize = Util.getScreenWorkingSize();
 
 		return new Point(
 				(screenSize.x - ConfigManager
@@ -107,8 +106,7 @@ public class LtRobot {
 	}
 
 	public static Point getLeftTopOffset() {
-		Point screenSize = Util.getScreenSize();
-		screenSize.y -= ConfigManager.getInt("BOTTOM_BAR_HEIGHT");
+		Point screenSize = Util.getScreenWorkingSize();
 
 		return new Point(
 				(screenSize.x - ConfigManager
@@ -118,8 +116,7 @@ public class LtRobot {
 	}
 
 	public static Point getLeftTopScriptUIOffset() {
-		Point screenSize = Util.getScreenSize();
-		screenSize.y -= ConfigManager.getInt("BOTTOM_BAR_HEIGHT");
+		Point screenSize = Util.getScreenWorkingSize();
 
 		return new Point(
 				(screenSize.x - ConfigManager
@@ -129,8 +126,7 @@ public class LtRobot {
 	}
 
 	private Point getLeftTopLoginOffset() {
-		Point screenSize = Util.getScreenSize();
-		screenSize.y -= ConfigManager.getInt("BOTTOM_BAR_HEIGHT");
+		Point screenSize = Util.getScreenWorkingSize();
 
 		return new Point(
 				(screenSize.x - ConfigManager

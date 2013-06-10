@@ -13,7 +13,22 @@ import javax.imageio.ImageIO;
 import org.cxt.lt.util.ConfigManager;
 
 public class Util {
-	public static Point getScreenSize() {
+
+	public static Point getScreenWorkingSize() {
+
+		Point windowSize = new Point();
+
+		Rectangle rect = java.awt.GraphicsEnvironment
+				.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+
+		windowSize.x = rect.width;
+		windowSize.y = rect.height;
+
+		return windowSize;
+
+	}
+
+	public static Point getScreenFullSize() {
 		Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
 		Rectangle rectangle = new Rectangle(resolution);
 
@@ -116,6 +131,10 @@ public class Util {
 		}
 
 		return ret;
+	}
+
+	public static void exec(String string) throws IOException {
+		Runtime.getRuntime().exec(string);
 	}
 
 }
