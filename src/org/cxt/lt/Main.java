@@ -19,8 +19,6 @@ import org.cxt.lt.util.UIFlagManager;
 import org.cxt.lt.util.UIFlagManager.FlagWrap;
 import org.cxt.lt.util.UIFlagManager.OnFlagDetetedListener;
 
-
-
 public class Main {
 
 	private static void setCopyBoardText(String aText) {
@@ -280,50 +278,53 @@ public class Main {
 			}
 		}
 
-		SecureConfigManager.initConfigFilePath(ConfigManager
-				.getString("SECURE_KV_FILE_PATH"));
-
 		if (!hasCfgParams) {
 			System.err.println("Please execute me by -cfg params");
 			return;
 		}
 
+		SecureConfigManager.initConfigFilePath(ConfigManager
+				.getString("SECURE_KV_FILE_PATH"));
+
 		/**
 		 * Remove simplay bin folder.
 		 */
+		if (false) {
+			final List<String> unDeleteFileList = new ArrayList<String>();
+			unDeleteFileList.add("img");
+			unDeleteFileList.add("AutoPlay.jar");
+			unDeleteFileList.add("config.kv");
+			unDeleteFileList.add("exit.exe");
+			unDeleteFileList.add("exit.py");
+			unDeleteFileList.add("secure.kv");
 
-		final List<String> unDeleteFileList = new ArrayList<String>();
-		unDeleteFileList.add("img");
-		unDeleteFileList.add("AutoPlay.jar");
-		unDeleteFileList.add("config.kv");
-		unDeleteFileList.add("exit.exe");
-		unDeleteFileList.add("exit.py");
-		unDeleteFileList.add("secure.kv");
+			String simplayPath = ConfigManager.getString("SIMPLE_PLAY_PATH");
+			LT.assertTrue(new File(simplayPath).exists(), simplayPath
+					+ " is not exists.");
+			File simplayBinFolder = new File(new File(simplayPath).getParent(),
+					"bin");
+			if (simplayBinFolder.exists() && simplayBinFolder.isDirectory()) {
+				// Util.deleteFolder(simplayFolder.getAbsolutePath());
+				String[] deleteList = simplayBinFolder.list(new FilenameFilter() {
 
-		String simplayPath = ConfigManager.getString("SIMPLE_PLAY_PATH");
-		LT.assertTrue(new File(simplayPath).exists(), simplayPath
-				+ " is not exists.");
-		File simplayFolder = new File(simplayPath).getParentFile();
-		if (simplayFolder.exists() && simplayFolder.isDirectory()) {
-			// Util.deleteFolder(simplayFolder.getAbsolutePath());
-			String[] deleteList = simplayFolder.list(new FilenameFilter() {
+					@Override
+					public boolean accept(File dir, String name) {
 
-				@Override
-				public boolean accept(File dir, String name) {
-
-					if (unDeleteFileList.contains(name)) {
-						return false;
-					} else {
-						return true;
+						if (unDeleteFileList.contains(name)) {
+							return false;
+						} else {
+							return true;
+						}
 					}
-				}
-			});
+				});
 
-			for (String deleteFilePath : deleteList) {
-				Util.deleteFile(deleteFilePath);
+				for (String deleteFilePath : deleteList) {
+					Util.deleteFile(simplayBinFolder.getAbsolutePath()
+							+ File.separatorChar + deleteFilePath);
+				}
 			}
 		}
-
+		
 		UIFlagManager.addListener(sOnFladDetetedListener);
 
 		// kill something...

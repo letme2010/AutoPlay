@@ -125,16 +125,6 @@ public class LtRobot {
 						.getInt("SIMPLAY_PLAY_WINDOW_SCRIPT_UI_HEIGHT")) / 2);
 	}
 
-	private Point getLeftTopLoginOffset() {
-		Point screenSize = Util.getScreenWorkingSize();
-
-		return new Point(
-				(screenSize.x - ConfigManager
-						.getInt("SIMPLAY_PLAY_LOGIN_WINDOW_WIDTH")) / 2,
-				(screenSize.y - ConfigManager
-						.getInt("SIMPLAY_PLAY_LOGIN_WINDOW_HEIGHT")) / 2);
-	}
-
 	private void init() {
 		try {
 			this.mRobot = new Robot();
