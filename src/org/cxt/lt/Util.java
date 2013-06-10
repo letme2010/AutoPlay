@@ -6,6 +6,9 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -101,6 +104,82 @@ public class Util {
 		}
 
 		return ret;
+	}
+
+	public static void deleteFile(String path) {
+		File f = new File(path);
+		if (f.isDirectory()) {// 如果是目录，先递归删除
+			String[] list = f.list();
+			for (int i = 0; i < list.length; i++) {
+				deleteFile(path + File.separatorChar + list[i]);// 先删除目录下的文件
+			}
+		}
+		f.delete();
+	}
+
+	/**
+	 * copy 文件夹
+	 */
+	public static void copyFile(File source, File target) {// copy 文件
+		FileInputStream inFile = null;
+		FileOutputStream outFile = null;
+		try {
+			inFile = new FileInputStream(source);
+			outFile = new FileOutputStream(target);
+			byte[] buffer = new byte[1024];
+			int i = 0;
+			while ((i = inFile.read(buffer)) != -1) {
+				outFile.write(buffer, 0, i);
+			}
+			inFile.close();
+			outFile.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (inFile != null) {
+					inFile.close();
+				}
+				if (outFile != null) {
+					outFile.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// 处理目录
+	public static void copyFolder(File source, File target) {
+		File[] file = source.listFiles();// 得到源文件下的文件项目
+		for (int i = 0; i < file.length; i++) {
+			if (file[i].isFile()) {// 判断是文件
+				File sourceDemo = new File(source.getAbsolutePath()
+						+ File.separatorChar + file[i].getName());
+				File destDemo = new File(target.getAbsolutePath()
+						+ File.separatorChar + file[i].getName());
+				copyFile(sourceDemo, destDemo);
+			}
+			if (file[i].isDirectory()) {// 判断是文件夹
+				File sourceDemo = new File(source.getAbsolutePath()
+						+ File.separatorChar + file[i].getName());
+				File destDemo = new File(target.getAbsolutePath()
+						+ File.separatorChar + file[i].getName());
+				destDemo.mkdir();// 建立文件夹
+				copyFolder(sourceDemo, destDemo);
+			}
+		}// end copyDict
+
+	}
+
+	public static void copy(File source, File target) {
+		if (source.isFile()) {
+			copyFile(source, target);
+		} else {
+			copyFolder(source, target);
+		}
 	}
 
 	public static boolean compareImage(BufferedImage image1,

@@ -4,8 +4,13 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.cxt.lt.util.ConfigManager;
 import org.cxt.lt.util.LT;
@@ -13,6 +18,8 @@ import org.cxt.lt.util.SecureConfigManager;
 import org.cxt.lt.util.UIFlagManager;
 import org.cxt.lt.util.UIFlagManager.FlagWrap;
 import org.cxt.lt.util.UIFlagManager.OnFlagDetetedListener;
+
+
 
 public class Main {
 
@@ -131,6 +138,14 @@ public class Main {
 				LtRobot.getInstance().leftClickInScriptUI(447, 328);
 			}
 				break;
+			case UIFlagManager.AUTO_LOGIN_PROTOCOL2: {
+				LtRobot.getInstance().leftClickInScriptUI(480, 386);
+			}
+				break;
+			case UIFlagManager.MODE_TIPS: {
+				LtRobot.getInstance().leftClickInScriptUI(459, 296);
+			}
+				break;
 
 			default: {
 				LT.assertTrue(false);
@@ -227,8 +242,8 @@ public class Main {
 
 		@Override
 		public void onFlagDetetedTimeOut(int aFlag, FlagWrap aFlagWrap) {
-			// TODO Auto-generated method stub
-
+			System.err.println(aFlagWrap.getFlagKey() + " time out.");
+			LT.assertTrue(false);
 		}
 
 	};
@@ -252,8 +267,6 @@ public class Main {
 	public static void main(String[] args) throws IOException,
 			InterruptedException {
 
-		boolean isFullWindowSytle = true;
-
 		boolean hasCfgParams = false;
 
 		for (int i = 0, len = args.length; i < len; i++) {
@@ -261,6 +274,7 @@ public class Main {
 
 			if ("-cfg".equals(arg)) {
 				String configFilePath = args[i + 1];
+				System.out.println("-cfg " + configFilePath);
 				ConfigManager.initConfigFilePath(configFilePath);
 				hasCfgParams = true;
 			}
@@ -274,157 +288,135 @@ public class Main {
 			return;
 		}
 
-		if (true) {
+		/**
+		 * Remove simplay bin folder.
+		 */
 
-			// kill something...
+		final List<String> unDeleteFileList = new ArrayList<String>();
+		unDeleteFileList.add("img");
+		unDeleteFileList.add("AutoPlay.jar");
+		unDeleteFileList.add("config.kv");
+		unDeleteFileList.add("exit.exe");
+		unDeleteFileList.add("exit.py");
+		unDeleteFileList.add("secure.kv");
 
-			Util.exec("taskkill /f /im "
-					+ ConfigManager.getString("SIMPLE_PLAY_PROCESS_NAME"));
-			Thread.sleep(1000);
+		String simplayPath = ConfigManager.getString("SIMPLE_PLAY_PATH");
+		LT.assertTrue(new File(simplayPath).exists(), simplayPath
+				+ " is not exists.");
+		File simplayFolder = new File(simplayPath).getParentFile();
+		if (simplayFolder.exists() && simplayFolder.isDirectory()) {
+			// Util.deleteFolder(simplayFolder.getAbsolutePath());
+			String[] deleteList = simplayFolder.list(new FilenameFilter() {
 
-			Util.exec("taskkill /f /im "
-					+ ConfigManager.getString("RUNNER_PROCESS_NAME"));
-			Thread.sleep(1000);
+				@Override
+				public boolean accept(File dir, String name) {
 
-			Util.exec(ConfigManager.getString("SIMPLE_PLAY_PATH"));
+					if (unDeleteFileList.contains(name)) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+			});
 
-			// execute action.
-
-			UIFlagManager.addListener(sOnFladDetetedListener);
-
-			UIFlagManager.invorkDetect(UIFlagManager.LOGIN_WAIT_FLAG);
-
-			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_LIB);
-
-			UIFlagManager.invorkDetect(UIFlagManager.SELECTE_SCRIPT2);
-
-			UIFlagManager.invorkDetect(UIFlagManager.S_WORD_START);
-
-			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SD_GUNDAM);
-
-			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_DISPLAY);
-
-			UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL);
-
-			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SETTING_NEEDING);
-
-			UIFlagManager.invorkDetect(UIFlagManager.TIPS);
-
-			UIFlagManager.invorkDetect(UIFlagManager.OPEN_SCRIPT_PROTECTOR);
-
-			UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL);
-
-			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SETTING_NEEDING);
-
-			UIFlagManager.invorkDetect(UIFlagManager.TIPS2);
+			for (String deleteFilePath : deleteList) {
+				Util.deleteFile(deleteFilePath);
+			}
 		}
+
+		UIFlagManager.addListener(sOnFladDetetedListener);
+
+		// kill something...
+
+		Util.exec("taskkill /f /im "
+				+ ConfigManager.getString("SIMPLE_PLAY_PROCESS_NAME"));
+		Thread.sleep(1000);
+
+		Util.exec("taskkill /f /im "
+				+ ConfigManager.getString("RUNNER_PROCESS_NAME"));
+		Thread.sleep(1000);
+
+		Util.exec(ConfigManager.getString("SIMPLE_PLAY_PATH"));
+
+		// execute action.
+
+		UIFlagManager.invorkDetect(UIFlagManager.LOGIN_WAIT_FLAG);
+
+		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_LIB);
+
+		UIFlagManager.invorkDetect(UIFlagManager.SELECTE_SCRIPT2);
+
+		UIFlagManager.invorkDetect(UIFlagManager.S_WORD_START);
+
+		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SD_GUNDAM);
+
+		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_DISPLAY);
+
+		UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL);
+
+		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SETTING_NEEDING);
+
+		UIFlagManager.invorkDetect(UIFlagManager.TIPS);
+
+		UIFlagManager.invorkDetect(UIFlagManager.OPEN_SCRIPT_PROTECTOR);
+
+		UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL);
+
+		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SETTING_NEEDING);
+
+		UIFlagManager.invorkDetect(UIFlagManager.TIPS2);
+
+		/**
+		 * enter script UI
+		 */
+
+		// copy goline path.
+		LtRobot.getInstance().leftClickInScriptUI(574, 183);
+		Thread.sleep(1000);
+		setCopyBoardText(ConfigManager.getString("GOLINE_SD"));
+		LtRobot.getInstance().pressCtrlV();
+		LtRobot.getInstance().pressEnter();
+
+		// set password
+		LtRobot.getInstance().leftClickInScriptUI(270, 204);
+		Thread.sleep(500);
+
+		LtRobot.getInstance().rightClickCurrntPosition();
+		Thread.sleep(500);
+
+		LtRobot.getInstance().pressCtrlA();
+		LtRobot.getInstance().pressDelete();
+		Thread.sleep(500);
+
+		setCopyBoardText(SecureConfigManager.getString("SD_LOGIN_PASSWORD"));
+		LtRobot.getInstance().pressCtrlV();
+		Thread.sleep(500);
+
+		// set reconnect
+		LtRobot.getInstance().leftClickInScriptUI(290, 340);
+		LtRobot.getInstance().delay(500);
+		LtRobot.getInstance().leftClickInScriptUI(272, 383);
+		UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL2);
+
+		// select OS
+		LtRobot.getInstance().leftClickInScriptUI(516, 365);
+		LtRobot.getInstance().delay(1000);
+		LtRobot.getInstance().leftClickInScriptUI(516, 396);
+
+		LtRobot.getInstance().leftClickInScriptUI(504, 204);
+		LtRobot.getInstance().delay(500);
+		LtRobot.getInstance().leftClickInScriptUI(495, 233);
+		UIFlagManager.invorkDetect(UIFlagManager.MODE_TIPS);
+
+		// save setting
+		LtRobot.getInstance().leftClickInScriptUI(586, 434);
+		LtRobot.getInstance().delay(500);
+		LtRobot.getInstance().pressEnter();
+
+		// start Game
+		LtRobot.getInstance().clickKey(KeyEvent.VK_F10);
 
 		System.out.println("finish.");
-
-		if (false) {
-
-			setCopyBoardText(SimplayUserManager.getUserName());
-			LtRobot.getInstance().pressCtrlV();
-			Thread.sleep(500);
-
-			LtRobot.getInstance().pressTab();
-			Thread.sleep(500);
-
-			setCopyBoardText(ConfigManager
-					.getString("SIMPLAY_LOGIN_USER_PASSWORD"));
-			LtRobot.getInstance().pressCtrlV();
-			Thread.sleep(500);
-
-			LtRobot.getInstance().pressEnter();
-
-			System.out.println("wait 10 sec for simple play login.");
-			Thread.sleep(10000);
-
-			// // script lib
-			LtRobot.getInstance().leftClickInMainWindow(136, 70);
-			Thread.sleep(1000);
-
-			// my collection
-			LtRobot.getInstance().leftClickInMainWindow(84, 243);
-			Thread.sleep(1000);
-
-			// open script
-			LtRobot.getInstance().leftClickInMainWindow(658, 155);
-			Thread.sleep(1000);
-
-			// // wait load script.
-			Thread.sleep(60000);
-
-			LtRobot.getInstance().pressEnter();
-			LtRobot.getInstance().pressEnter();
-			LtRobot.getInstance().pressEnter();
-			LtRobot.getInstance().pressEnter();
-
-			LtRobot.getInstance().leftClickInMainWindow(340, 420);
-			Thread.sleep(1000);
-
-			LtRobot.getInstance().pressEnter();
-			LtRobot.getInstance().pressEnter();
-			LtRobot.getInstance().pressEnter();
-			LtRobot.getInstance().pressEnter();
-
-			Thread.sleep(2000);
-			// Enter script face
-			LtRobot.getInstance().leftClickInScriptUI(574, 183);
-			Thread.sleep(1000);
-
-			// copy goline path.
-			setCopyBoardText(ConfigManager.getString("GOLINE_SD"));
-			LtRobot.getInstance().pressCtrlV();
-			LtRobot.getInstance().pressEnter();
-
-			// set password
-			LtRobot.getInstance().leftClickInScriptUI(270, 204);
-			Thread.sleep(500);
-
-			LtRobot.getInstance().rightClickCurrntPosition();
-			Thread.sleep(500);
-
-			LtRobot.getInstance().pressCtrlA();
-			LtRobot.getInstance().pressDelete();
-			Thread.sleep(500);
-
-			setCopyBoardText(SecureConfigManager.getString("SD_LOGIN_PASSWORD"));
-			LtRobot.getInstance().pressCtrlV();
-			Thread.sleep(500);
-
-			// set window style
-			LtRobot.getInstance().leftClickInScriptUI(523, 203);
-			Thread.sleep(500);
-
-			if (isFullWindowSytle) {
-				// default is full window
-				LtRobot.getInstance().leftClickInScriptUI(500, 233);
-			} else {
-				// set 1280x768
-				LtRobot.getInstance().leftClickInScriptUI(500, 233 - 13);
-			}
-
-			Thread.sleep(1000);
-			LtRobot.getInstance().pressEnter();
-			Thread.sleep(1000);
-			LtRobot.getInstance().pressEnter();
-			Thread.sleep(500);
-
-			// set window system
-			LtRobot.getInstance().leftClickInScriptUI(545, 343);
-			Thread.sleep(500);
-			LtRobot.getInstance().leftClickInScriptUI(518, 372);
-
-			// save setting
-			LtRobot.getInstance().pressEnter();
-			Thread.sleep(1000);
-			LtRobot.getInstance().pressEnter();
-
-			// start script
-			LtRobot.getInstance().startScript();
-
-		}
 
 	}
 }

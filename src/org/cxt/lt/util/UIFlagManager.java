@@ -36,6 +36,8 @@ public class UIFlagManager {
 	public static final int TIPS = 16;
 	public static final int OPEN_SCRIPT_PROTECTOR = 17;
 	public static final int TIPS2 = 18;
+	public static final int AUTO_LOGIN_PROTOCOL2 = 19;
+	public static final int MODE_TIPS = 20;
 
 	static {
 
@@ -80,20 +82,28 @@ public class UIFlagManager {
 
 		sMap.put(AUTO_LOGIN_PROTOCOL, new FlagWrap(450, 422, 501, 429,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "AUTO_LOGIN_PROTOCOL"));
-		
+
 		sMap.put(SCRIPT_SETTING_NEEDING, new FlagWrap(544, 388, 576, 394,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "SCRIPT_SETTING_NEEDING"));
-		
+
 		sMap.put(TIPS, new FlagWrap(325, 357, 454, 375,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "TIPS"));
-		
+
 		sMap.put(OPEN_SCRIPT_PROTECTOR, new FlagWrap(226, 405, 445, 437,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "OPEN_SCRIPT_PROTECTOR"));
-		
-		sMap.put(TIPS2, new FlagWrap(332, 312, 447, 328,
-				OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
-				"TIPS2"));
 
+		sMap.put(TIPS2,
+				new FlagWrap(332, 312, 447, 328,
+						OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
+						"TIPS2"));
+
+		sMap.put(AUTO_LOGIN_PROTOCOL2, new FlagWrap(464, 381, 497, 387,
+				OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
+				"AUTO_LOGIN_PROTOCOL2"));
+
+		sMap.put(MODE_TIPS, new FlagWrap(425, 291, 459, 296,
+				OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
+				"MODE_TIPS"));
 	}
 
 	private static final List<OnFlagDetetedListener> sListenerList = new ArrayList<OnFlagDetetedListener>();
@@ -120,6 +130,9 @@ public class UIFlagManager {
 	}
 
 	public static void invorkDetect(int aFlag) {
+
+		int count = 0;
+
 		FlagWrap flagWrap = UIFlagManager.getFlagWrap(aFlag);
 
 		do {
@@ -134,6 +147,17 @@ public class UIFlagManager {
 				System.out.println("wait " + flagWrap.getFlagKey() + ".");
 				LtRobot.getInstance().delay(1000);
 
+			}
+
+			count++;
+
+			if (count > ConfigManager.getInt("TIME_OUT_SECOND")) {
+				for (OnFlagDetetedListener listener : sListenerList) {
+					listener.onFlagDetetedTimeOut(aFlag, flagWrap);
+				}
+
+				System.out.println(flagWrap.getFlagKey() + " detect fail.");
+				break;
 			}
 
 		} while (true);

@@ -68,8 +68,8 @@ public class ConfigManager {
 
 		LT.notNull(sConfigMap);
 		String ret = (String) sConfigMap.get(key);
-		LT.notNull(ret);
-		LT.assertTrue(!"".equals(ret.trim()));
+		LT.assertTrue(null != ret, key + " not config.");
+		LT.assertTrue(!"".equals(ret.trim()), key + " not config.");
 		return ret;
 	}
 
