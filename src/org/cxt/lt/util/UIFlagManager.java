@@ -29,6 +29,13 @@ public class UIFlagManager {
 	public static final int SELECTE_SCRIPT = 9;
 	public static final int S_WORD_START = 10;
 	public static final int SCRIPT_SD_GUNDAM = 11;
+	public static final int SELECTE_SCRIPT2 = 12;
+	public static final int SCRIPT_DISPLAY = 13;
+	public static final int AUTO_LOGIN_PROTOCOL = 14;
+	public static final int SCRIPT_SETTING_NEEDING = 15;
+	public static final int TIPS = 16;
+	public static final int OPEN_SCRIPT_PROTECTOR = 17;
+	public static final int TIPS2 = 18;
 
 	static {
 
@@ -59,11 +66,34 @@ public class UIFlagManager {
 		sMap.put(SELECTE_SCRIPT, new FlagWrap(30, 130, 83, 149,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "SELECTE_SCRIPT"));
 
+		sMap.put(SELECTE_SCRIPT2, new FlagWrap(33, 126, 50, 146,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "SELECTE_SCRIPT2"));
+
 		sMap.put(S_WORD_START, new FlagWrap(550, 159, 565, 175,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "S_WORD_START"));
 
 		sMap.put(SCRIPT_SD_GUNDAM, new FlagWrap(337, 226, 394, 246,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "SCRIPT_SD_GUNDAM"));
+
+		sMap.put(SCRIPT_DISPLAY, new FlagWrap(142, 182, 353, 200,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "SCRIPT_DISPLAY"));
+
+		sMap.put(AUTO_LOGIN_PROTOCOL, new FlagWrap(450, 422, 501, 429,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "AUTO_LOGIN_PROTOCOL"));
+		
+		sMap.put(SCRIPT_SETTING_NEEDING, new FlagWrap(544, 388, 576, 394,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "SCRIPT_SETTING_NEEDING"));
+		
+		sMap.put(TIPS, new FlagWrap(325, 357, 454, 375,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "TIPS"));
+		
+		sMap.put(OPEN_SCRIPT_PROTECTOR, new FlagWrap(226, 405, 445, 437,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "OPEN_SCRIPT_PROTECTOR"));
+		
+		sMap.put(TIPS2, new FlagWrap(332, 312, 447, 328,
+				OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
+				"TIPS2"));
+
 	}
 
 	private static final List<OnFlagDetetedListener> sListenerList = new ArrayList<OnFlagDetetedListener>();

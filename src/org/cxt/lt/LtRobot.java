@@ -198,7 +198,9 @@ public class LtRobot {
 				aFlagWrap.getRight(), aFlagWrap.getBottom());
 	}
 
+
 	public BufferedImage screenShot(int left, int top, int right, int bottom) {
+		
 		this.showShotWaitRect(left, top, right, bottom);
 		this.delay(10);
 		this.hideRect();

@@ -86,7 +86,12 @@ public class Main {
 				break;
 
 			case UIFlagManager.SELECTE_SCRIPT: {
-				LtRobot.getInstance().leftClickInMainWindow(58, 141);
+				LtRobot.getInstance().leftClickInMainWindow(42, 137);
+			}
+				break;
+
+			case UIFlagManager.SELECTE_SCRIPT2: {
+				LtRobot.getInstance().leftClickInMainWindow(42, 137);
 			}
 				break;
 
@@ -100,10 +105,123 @@ public class Main {
 			}
 				break;
 
+			case UIFlagManager.SCRIPT_DISPLAY: {
+				waitScript();
+			}
+				break;
+
+			case UIFlagManager.AUTO_LOGIN_PROTOCOL: {
+				LtRobot.getInstance().leftClickInMainWindow(501, 429);
+
+			}
+				break;
+			case UIFlagManager.SCRIPT_SETTING_NEEDING: {
+				LtRobot.getInstance().leftClickInMainWindow(576, 394);
+			}
+				break;
+			case UIFlagManager.TIPS: {
+				LtRobot.getInstance().leftClickInMainWindow(454, 375);
+			}
+				break;
+			case UIFlagManager.OPEN_SCRIPT_PROTECTOR: {
+				LtRobot.getInstance().leftClickInMainWindow(340, 420);
+			}
+				break;
+			case UIFlagManager.TIPS2: {
+				LtRobot.getInstance().leftClickInScriptUI(447, 328);
+			}
+				break;
+
 			default: {
 				LT.assertTrue(false);
 			}
 				break;
+			}
+		}
+
+		private void waitScript() {
+			BufferedImage greenButtonFlagImage = UIFlagManager
+					.getImage("OPEN_SCRIPT_GREEN_BUTTON2");
+			LT.assertTrue(null != greenButtonFlagImage);
+
+			BufferedImage scriptFlagImage = UIFlagManager
+					.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND");
+			BufferedImage scriptFlagImage2 = UIFlagManager
+					.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND_CLICKED" + "");
+
+			LT.assertTrue(null != scriptFlagImage);
+
+			int greenButtonLeft = 688;
+			int greenButtonRight = 717;
+			int scanGreenButtonTopLimit = 200;
+			int scanGreenButtonBottomLimit = 530;
+
+			int scriptShotLeft = 688 - 544;
+			int scriptShotRight = 688 - 217;
+			int scriptShotTopLimit = scanGreenButtonTopLimit
+					+ LtRobot.getLeftTopOffset().y;
+			int scriptShotBottomLimit = scanGreenButtonBottomLimit
+					+ LtRobot.getLeftTopOffset().y;
+
+			for (int top = scriptShotTopLimit; top <= scriptShotBottomLimit; ++top) {
+
+				if (true) {
+					// detect logic
+
+					FlagWrap scriptShotFlagWrap = new FlagWrap(scriptShotLeft,
+							top, scriptShotRight, top
+									+ greenButtonFlagImage.getHeight(),
+							OffsetType.SIMPLAY_MAIN_WINDOW, "");
+
+					BufferedImage scriptShotImage = LtRobot.getInstance()
+							.screenShot(scriptShotFlagWrap);
+
+					Util.saveImageToFile(scriptShotImage,
+							"C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
+
+					if (Util.compareImage(scriptShotImage, scriptFlagImage)
+							|| Util.compareImage(scriptShotImage,
+									scriptFlagImage2)) {
+
+						System.out.println("find it.");
+
+						LtRobot.getInstance().leftClickInMainWindow(700,
+								scriptShotFlagWrap.getOriginTop() + 9);
+
+						break;
+					}
+				}
+
+				if (false) {
+					// use green button to get script image.
+					FlagWrap flagWrap = new FlagWrap(greenButtonLeft, top,
+							greenButtonRight, top
+									+ (greenButtonFlagImage.getHeight()),
+							OffsetType.SIMPLAY_MAIN_WINDOW, "");
+
+					BufferedImage shotImage = LtRobot.getInstance().screenShot(
+							flagWrap);
+
+					if (Util.compareImage(greenButtonFlagImage, shotImage)) {
+						// System.err.println(flagWrap);
+
+						FlagWrap scriptFlagWrap = new FlagWrap(
+								flagWrap.getOriginLeft() - 544,
+								flagWrap.getOriginTop(),
+								flagWrap.getOriginRight() - 217,
+								flagWrap.getOriginBottom(),
+								OffsetType.SIMPLAY_MAIN_WINDOW, "");
+
+						BufferedImage shotScriptImage = LtRobot.getInstance()
+								.screenShot(scriptFlagWrap);
+
+						Util.saveImageToFile(
+								shotScriptImage,
+								"C:\\Users\\letme2010\\Desktop\\t\\"
+										+ flagWrap.getTop() + ".png");
+
+					}
+				}
 			}
 		}
 
@@ -178,104 +296,27 @@ public class Main {
 
 			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_LIB);
 
-			UIFlagManager.invorkDetect(UIFlagManager.SELECTE_SCRIPT);
+			UIFlagManager.invorkDetect(UIFlagManager.SELECTE_SCRIPT2);
 
 			UIFlagManager.invorkDetect(UIFlagManager.S_WORD_START);
 
 			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SD_GUNDAM);
 
-		}
+			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_DISPLAY);
 
-		LtRobot.getInstance().delay(3000);
+			UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL);
 
-		BufferedImage greenButtonFlagImage = UIFlagManager
-				.getImage("OPEN_SCRIPT_GREEN_BUTTON2");
-		LT.assertTrue(null != greenButtonFlagImage);
+			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SETTING_NEEDING);
 
-		BufferedImage scriptFlagImage = UIFlagManager
-				.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND");
+			UIFlagManager.invorkDetect(UIFlagManager.TIPS);
 
-		LT.assertTrue(null != scriptFlagImage);
+			UIFlagManager.invorkDetect(UIFlagManager.OPEN_SCRIPT_PROTECTOR);
 
-		int greenButtonLeft = 688;
-		int greenButtonRight = 717;
-		int scanGreenButtonTopLimit = 200;
-		int scanGreenButtonBottomLimit = 530;
+			UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL);
 
-		int scriptShotLeft = 688 - 544;
-		int scriptShotRight = 688 - 217;
-		int scriptShotTopLimit = scanGreenButtonTopLimit
-				+ LtRobot.getLeftTopOffset().y;
-		int scriptShotBottomLimit = scanGreenButtonBottomLimit
-				+ LtRobot.getLeftTopOffset().y;
+			UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SETTING_NEEDING);
 
-		for (int top = scriptShotTopLimit; top <= scriptShotBottomLimit; ++top) {
-
-			if (true) {
-				// detect logic
-
-				FlagWrap scriptShotFlagWrap = new FlagWrap(scriptShotLeft, top,
-						scriptShotRight,
-						top + greenButtonFlagImage.getHeight(),
-						OffsetType.SIMPLAY_MAIN_WINDOW, "");
-
-				BufferedImage scriptShotImage = LtRobot.getInstance()
-						.screenShot(scriptShotFlagWrap);
-
-				// Util.saveImageToFile(scriptShotImage,
-				// "C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
-
-				if (Util.compareImage(scriptShotImage, scriptFlagImage)) {
-					System.out.println("find it.");
-
-					LtRobot.getInstance().leftClickInMainWindow(700,
-							scriptShotFlagWrap.getOriginTop() + 9);
-
-					break;
-				}
-			}
-
-			if (false) {
-				// use green button to get script image.
-				FlagWrap flagWrap = new FlagWrap(greenButtonLeft, top,
-						greenButtonRight, top
-								+ (greenButtonFlagImage.getHeight()),
-						OffsetType.SIMPLAY_MAIN_WINDOW, "");
-
-				BufferedImage shotImage = LtRobot.getInstance().screenShot(
-						flagWrap);
-
-				if (Util.compareImage(greenButtonFlagImage, shotImage)) {
-					// System.err.println(flagWrap);
-
-					FlagWrap scriptFlagWrap = new FlagWrap(
-							flagWrap.getOriginLeft() - 544,
-							flagWrap.getOriginTop(),
-							flagWrap.getOriginRight() - 217,
-							flagWrap.getOriginBottom(),
-							OffsetType.SIMPLAY_MAIN_WINDOW, "");
-
-					BufferedImage shotScriptImage = LtRobot.getInstance()
-							.screenShot(scriptFlagWrap);
-
-					Util.saveImageToFile(
-							shotScriptImage,
-							"C:\\Users\\letme2010\\Desktop\\t\\"
-									+ flagWrap.getTop() + ".png");
-
-				}
-			}
-
-		}
-
-		if (false) {
-			Thread.sleep(3000);
-
-			BufferedImage image = LtRobot.getInstance().screenShot(
-					new FlagWrap(527, 156, 581, 170,
-							OffsetType.SIMPLAY_MAIN_WINDOW, ""));
-
-			Util.saveImageToDefaultFile(image);
+			UIFlagManager.invorkDetect(UIFlagManager.TIPS2);
 		}
 
 		System.out.println("finish.");
