@@ -17,7 +17,8 @@ import org.cxt.lt.util.LT;
 import org.cxt.lt.util.SecureConfigManager;
 import org.cxt.lt.util.UIFlagManager;
 import org.cxt.lt.util.UIFlagManager.FlagWrap;
-import org.cxt.lt.util.UIFlagManager.OnFlagDetetedListener;
+
+import com.sun.org.apache.xpath.internal.operations.Lte;
 
 public class Main {
 
@@ -32,219 +33,56 @@ public class Main {
 		clip.setContents(tText, null);
 	}
 
-	private static final OnFlagDetetedListener sOnFladDetetedListener = new OnFlagDetetedListener() {
+	private static void waitScript() {
+		BufferedImage greenButtonFlagImage = UIFlagManager
+				.getImage("OPEN_SCRIPT_GREEN_BUTTON2");
+		LT.assertTrue(null != greenButtonFlagImage);
 
-		@Override
-		public void onFlagDetetedSuccess(int aFlag, FlagWrap aFlagWrap) {
-			switch (aFlag) {
-			case UIFlagManager.LOGIN_WAIT_FLAG: {
+		BufferedImage scriptFlagImage = UIFlagManager
+				.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND");
+		BufferedImage scriptFlagImage2 = UIFlagManager
+				.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND_CLICKED" + "");
 
-				setCopyBoardText(SimplayUserManager.getUserName());
-				LtRobot.getInstance().pressCtrlV();
-				LtRobot.getInstance().delay(500);
+		LT.assertTrue(null != scriptFlagImage);
 
-				LtRobot.getInstance().pressTab();
-				LtRobot.getInstance().delay(500);
+		// int greenButtonLeft = 688;
+		// int greenButtonRight = 717;
+		int scanGreenButtonTopLimit = 200;
+		int scanGreenButtonBottomLimit = 530;
 
-				setCopyBoardText(SecureConfigManager
-						.getString("SIMPLAY_LOGIN_USER_PASSWORD"));
-				LtRobot.getInstance().pressCtrlV();
-				LtRobot.getInstance().delay(500);
+		int scriptShotLeft = 688 - 544;
+		int scriptShotRight = 688 - 217;
+		int scriptShotTopLimit = scanGreenButtonTopLimit
+				+ LtRobot.getLeftTopOffset().y;
+		int scriptShotBottomLimit = scanGreenButtonBottomLimit
+				+ LtRobot.getLeftTopOffset().y;
 
-				LtRobot.getInstance().pressEnter();
+		for (int top = scriptShotTopLimit; top <= scriptShotBottomLimit; ++top) {
 
-			}
-				break;
+			// detect logic
 
-			case UIFlagManager.SCRIPT_LIB: {
-				LtRobot.getInstance().leftClickInMainWindow(136, 70);
-			}
-				break;
-			case UIFlagManager.COLLECTION: {
-				LtRobot.getInstance().leftClickInMainWindow(84, 243);
-			}
-				break;
+			FlagWrap scriptShotFlagWrap = new FlagWrap(scriptShotLeft, top,
+					scriptShotRight, top + greenButtonFlagImage.getHeight(),
+					OffsetType.SIMPLAY_MAIN_WINDOW, "");
 
-			case UIFlagManager.OPEN_SCRIPT: {
-				LtRobot.getInstance().leftClickInMainWindow(658, 155);
-			}
-				break;
+			BufferedImage scriptShotImage = LtRobot.getInstance().screenShot(
+					scriptShotFlagWrap);
 
-			case UIFlagManager.DIALOG1: {
-				LtRobot.getInstance().pressEnter();
-			}
-				break;
+			Util.saveImageToFile(scriptShotImage,
+					"C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
 
-			case UIFlagManager.DIALOG2: {
-				LtRobot.getInstance().pressEnter();
-			}
-				break;
+			if (Util.compareImage(scriptShotImage, scriptFlagImage)
+					|| Util.compareImage(scriptShotImage, scriptFlagImage2)) {
 
-			case UIFlagManager.DIALOG3: {
-				LtRobot.getInstance().pressEnter();
-			}
-				break;
+				System.out.println("find it.");
 
-			case UIFlagManager.DIALOG_MODE_TIPS: {
-				LtRobot.getInstance().pressEnter();
-			}
-				break;
+				LtRobot.getInstance().leftClickInMainWindow(700,
+						scriptShotFlagWrap.getOriginTop() + 9);
 
-			case UIFlagManager.SELECTE_SCRIPT: {
-				LtRobot.getInstance().leftClickInMainWindow(42, 137);
-			}
-				break;
-
-			case UIFlagManager.SELECTE_SCRIPT2: {
-				LtRobot.getInstance().leftClickInMainWindow(42, 137);
-			}
-				break;
-
-			case UIFlagManager.S_WORD_START: {
-				LtRobot.getInstance().leftClickInMainWindow(558, 168);
-			}
-				break;
-
-			case UIFlagManager.SCRIPT_SD_GUNDAM: {
-				LtRobot.getInstance().leftClickInMainWindow(368, 236);
-			}
-				break;
-
-			case UIFlagManager.SCRIPT_DISPLAY: {
-				waitScript();
-			}
-				break;
-
-			case UIFlagManager.AUTO_LOGIN_PROTOCOL: {
-				LtRobot.getInstance().leftClickInMainWindow(501, 429);
-
-			}
-				break;
-			case UIFlagManager.SCRIPT_SETTING_NEEDING: {
-				LtRobot.getInstance().leftClickInMainWindow(576, 394);
-			}
-				break;
-			case UIFlagManager.TIPS: {
-				LtRobot.getInstance().leftClickInMainWindow(454, 375);
-			}
-				break;
-			case UIFlagManager.OPEN_SCRIPT_PROTECTOR: {
-				LtRobot.getInstance().leftClickInMainWindow(340, 420);
-			}
-				break;
-			case UIFlagManager.TIPS2: {
-				LtRobot.getInstance().leftClickInScriptUI(447, 328);
-			}
-				break;
-			case UIFlagManager.AUTO_LOGIN_PROTOCOL2: {
-				LtRobot.getInstance().leftClickInScriptUI(480, 386);
-			}
-				break;
-			case UIFlagManager.MODE_TIPS: {
-				LtRobot.getInstance().leftClickInScriptUI(459, 296);
-			}
-				break;
-
-			default: {
-				LT.assertTrue(false);
-			}
 				break;
 			}
 		}
-
-		private void waitScript() {
-			BufferedImage greenButtonFlagImage = UIFlagManager
-					.getImage("OPEN_SCRIPT_GREEN_BUTTON2");
-			LT.assertTrue(null != greenButtonFlagImage);
-
-			BufferedImage scriptFlagImage = UIFlagManager
-					.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND");
-			BufferedImage scriptFlagImage2 = UIFlagManager
-					.getImage("SCRIPT_OF_RED_KILLER_BACKGROUND_CLICKED" + "");
-
-			LT.assertTrue(null != scriptFlagImage);
-
-			int greenButtonLeft = 688;
-			int greenButtonRight = 717;
-			int scanGreenButtonTopLimit = 200;
-			int scanGreenButtonBottomLimit = 530;
-
-			int scriptShotLeft = 688 - 544;
-			int scriptShotRight = 688 - 217;
-			int scriptShotTopLimit = scanGreenButtonTopLimit
-					+ LtRobot.getLeftTopOffset().y;
-			int scriptShotBottomLimit = scanGreenButtonBottomLimit
-					+ LtRobot.getLeftTopOffset().y;
-
-			for (int top = scriptShotTopLimit; top <= scriptShotBottomLimit; ++top) {
-
-				if (true) {
-					// detect logic
-
-					FlagWrap scriptShotFlagWrap = new FlagWrap(scriptShotLeft,
-							top, scriptShotRight, top
-									+ greenButtonFlagImage.getHeight(),
-							OffsetType.SIMPLAY_MAIN_WINDOW, "");
-
-					BufferedImage scriptShotImage = LtRobot.getInstance()
-							.screenShot(scriptShotFlagWrap);
-
-					Util.saveImageToFile(scriptShotImage,
-							"C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
-
-					if (Util.compareImage(scriptShotImage, scriptFlagImage)
-							|| Util.compareImage(scriptShotImage,
-									scriptFlagImage2)) {
-
-						System.out.println("find it.");
-
-						LtRobot.getInstance().leftClickInMainWindow(700,
-								scriptShotFlagWrap.getOriginTop() + 9);
-
-						break;
-					}
-				}
-
-				if (false) {
-					// use green button to get script image.
-					FlagWrap flagWrap = new FlagWrap(greenButtonLeft, top,
-							greenButtonRight, top
-									+ (greenButtonFlagImage.getHeight()),
-							OffsetType.SIMPLAY_MAIN_WINDOW, "");
-
-					BufferedImage shotImage = LtRobot.getInstance().screenShot(
-							flagWrap);
-
-					if (Util.compareImage(greenButtonFlagImage, shotImage)) {
-						// System.err.println(flagWrap);
-
-						FlagWrap scriptFlagWrap = new FlagWrap(
-								flagWrap.getOriginLeft() - 544,
-								flagWrap.getOriginTop(),
-								flagWrap.getOriginRight() - 217,
-								flagWrap.getOriginBottom(),
-								OffsetType.SIMPLAY_MAIN_WINDOW, "");
-
-						BufferedImage shotScriptImage = LtRobot.getInstance()
-								.screenShot(scriptFlagWrap);
-
-						Util.saveImageToFile(
-								shotScriptImage,
-								"C:\\Users\\letme2010\\Desktop\\t\\"
-										+ flagWrap.getTop() + ".png");
-
-					}
-				}
-			}
-		}
-
-		@Override
-		public void onFlagDetetedTimeOut(int aFlag, FlagWrap aFlagWrap) {
-			System.err.println(aFlagWrap.getFlagKey() + " time out.");
-			LT.assertTrue(false);
-		}
-
-	};
+	}
 
 	@Deprecated
 	public static void robotScreen() {
@@ -305,18 +143,19 @@ public class Main {
 					"bin");
 			if (simplayBinFolder.exists() && simplayBinFolder.isDirectory()) {
 				// Util.deleteFolder(simplayFolder.getAbsolutePath());
-				String[] deleteList = simplayBinFolder.list(new FilenameFilter() {
+				String[] deleteList = simplayBinFolder
+						.list(new FilenameFilter() {
 
-					@Override
-					public boolean accept(File dir, String name) {
+							@Override
+							public boolean accept(File dir, String name) {
 
-						if (unDeleteFileList.contains(name)) {
-							return false;
-						} else {
-							return true;
-						}
-					}
-				});
+								if (unDeleteFileList.contains(name)) {
+									return false;
+								} else {
+									return true;
+								}
+							}
+						});
 
 				for (String deleteFilePath : deleteList) {
 					Util.deleteFile(simplayBinFolder.getAbsolutePath()
@@ -324,8 +163,6 @@ public class Main {
 				}
 			}
 		}
-		
-		UIFlagManager.addListener(sOnFladDetetedListener);
 
 		// kill something...
 
@@ -341,42 +178,320 @@ public class Main {
 
 		// execute action.
 
-		UIFlagManager.invorkDetect(UIFlagManager.LOGIN_WAIT_FLAG);
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.LOGIN_WAIT_FLAG },
+				new UIFlagManager.Callback() {
 
-		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_LIB);
+					public void onDetectSuccess(int aFlag) {
+						setCopyBoardText(SimplayUserManager.getUserName());
+						LtRobot.getInstance().pressCtrlV();
+						LtRobot.getInstance().delay(500);
 
-		UIFlagManager.invorkDetect(UIFlagManager.SELECTE_SCRIPT2);
+						LtRobot.getInstance().pressTab();
+						LtRobot.getInstance().delay(500);
 
-		UIFlagManager.invorkDetect(UIFlagManager.S_WORD_START);
+						setCopyBoardText(SecureConfigManager
+								.getString("SIMPLAY_LOGIN_USER_PASSWORD"));
+						LtRobot.getInstance().pressCtrlV();
+						LtRobot.getInstance().delay(500);
 
-		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SD_GUNDAM);
+						LtRobot.getInstance().pressEnter();
+					}
 
-		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_DISPLAY);
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
 
-		UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL);
+					}
 
-		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SETTING_NEEDING);
+				});
 
-		UIFlagManager.invorkDetect(UIFlagManager.TIPS);
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.SCRIPT_LIB },
+				new UIFlagManager.Callback() {
 
-		UIFlagManager.invorkDetect(UIFlagManager.OPEN_SCRIPT_PROTECTOR);
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(136, 70);
+					}
 
-		UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL);
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
 
-		UIFlagManager.invorkDetect(UIFlagManager.SCRIPT_SETTING_NEEDING);
+					}
+				});
 
-		UIFlagManager.invorkDetect(UIFlagManager.TIPS2);
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.SELECTE_SCRIPT2 },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(42, 137);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.S_WORD_START },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(558, 168);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(
+				new int[] { UIFlagManager.SCRIPT_SD_GUNDAM },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(368, 236);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.SCRIPT_DISPLAY },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						waitScript();
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+					}
+				});
+
+		UIFlagManager.invorkDetect(
+				new int[] { UIFlagManager.AUTO_LOGIN_PROTOCOL },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(501, 429);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(
+				new int[] { UIFlagManager.SCRIPT_SETTING_NEEDING },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(576, 394);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.TIPS },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(454, 375);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(new int[] {
+				UIFlagManager.OPEN_SCRIPT_PROTECTOR, UIFlagManager.MODE_TIPS },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+
+						switch (aFlag) {
+						case UIFlagManager.OPEN_SCRIPT_PROTECTOR: {
+							LtRobot.getInstance().leftClickInMainWindow(340,
+									420);
+							break;
+						}
+						case UIFlagManager.MODE_TIPS: {
+							LtRobot.getInstance().leftClickInScriptUI(459, 296);
+
+							LtRobot.getInstance().delay(1000);
+							UIFlagManager
+									.invorkDetect(
+											new int[] { UIFlagManager.OPEN_SCRIPT_PROTECTOR },
+											new UIFlagManager.Callback() {
+
+												@Override
+												public void onDetectSuccess(
+														int aFlag) {
+													LtRobot.getInstance()
+															.leftClickInMainWindow(
+																	340, 420);
+												}
+
+												@Override
+												public void onDetectFail() {
+													// TODO Auto-generated
+													// method stub
+
+												}
+											});
+
+							break;
+						}
+
+						default: {
+							LT.assertTrue(false);
+							break;
+						}
+						}
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(
+				new int[] { UIFlagManager.AUTO_LOGIN_PROTOCOL },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInScriptUI(480, 386);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(
+				new int[] { UIFlagManager.SCRIPT_SETTING_NEEDING },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(576, 394);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.TIPS2 },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInScriptUI(447, 328);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 		/**
 		 * enter script UI
 		 */
 
-		// copy goline path.
-		LtRobot.getInstance().leftClickInScriptUI(574, 183);
-		Thread.sleep(1000);
-		setCopyBoardText(ConfigManager.getString("GOLINE_SD"));
-		LtRobot.getInstance().pressCtrlV();
-		LtRobot.getInstance().pressEnter();
+		UIFlagManager.invorkDetect(new int[] {
+				UIFlagManager.SD_GUNDAM_EXE_PATH, UIFlagManager.MODE_TIPS },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+
+						switch (aFlag) {
+						case UIFlagManager.SD_GUNDAM_EXE_PATH: {
+							
+							// copy goline path.
+							LtRobot.getInstance().leftClickInScriptUI(574, 183);
+							LtRobot.getInstance().delay(1000);
+							setCopyBoardText(ConfigManager.getString("GOLINE_SD"));
+							LtRobot.getInstance().pressCtrlV();
+							LtRobot.getInstance().pressEnter();
+							
+							break;
+						}
+						case UIFlagManager.MODE_TIPS: {
+						
+							LtRobot.getInstance().leftClickInScriptUI(459, 296);
+							LtRobot.getInstance().delay(1000);
+							
+							UIFlagManager.invorkDetect(new int[]{UIFlagManager.SD_GUNDAM_EXE_PATH}, new UIFlagManager.Callback() {
+								
+								@Override
+								public void onDetectSuccess(int aFlag) {
+									
+									// copy goline path.
+									LtRobot.getInstance().leftClickInScriptUI(574, 183);
+									LtRobot.getInstance().delay(1000);
+									setCopyBoardText(ConfigManager.getString("GOLINE_SD"));
+									LtRobot.getInstance().pressCtrlV();
+									LtRobot.getInstance().pressEnter();									
+								}
+								
+								@Override
+								public void onDetectFail() {
+									// TODO Auto-generated method stub
+									
+								}
+							});
+
+							break;
+						}
+
+						default: {
+							LT.assertTrue(false);
+							break;
+						}
+						}
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 		// set password
 		LtRobot.getInstance().leftClickInScriptUI(270, 204);
@@ -397,9 +512,24 @@ public class Main {
 		LtRobot.getInstance().leftClickInScriptUI(290, 340);
 		LtRobot.getInstance().delay(500);
 		LtRobot.getInstance().leftClickInScriptUI(272, 383);
-		UIFlagManager.invorkDetect(UIFlagManager.AUTO_LOGIN_PROTOCOL2);
+		UIFlagManager.invorkDetect(
+				new int[] { UIFlagManager.AUTO_LOGIN_PROTOCOL2 },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInScriptUI(480, 386);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 		// select OS
+
 		LtRobot.getInstance().leftClickInScriptUI(516, 365);
 		LtRobot.getInstance().delay(1000);
 		LtRobot.getInstance().leftClickInScriptUI(516, 396);
@@ -407,7 +537,20 @@ public class Main {
 		LtRobot.getInstance().leftClickInScriptUI(504, 204);
 		LtRobot.getInstance().delay(500);
 		LtRobot.getInstance().leftClickInScriptUI(495, 233);
-		UIFlagManager.invorkDetect(UIFlagManager.MODE_TIPS);
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.MODE_TIPS },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInScriptUI(480, 386);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 		// save setting
 		LtRobot.getInstance().leftClickInScriptUI(586, 434);

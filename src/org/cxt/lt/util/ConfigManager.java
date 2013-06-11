@@ -54,6 +54,8 @@ public class ConfigManager {
 			System.err
 					.println("init GConfig instance fail, check config file in current folder.");
 		}
+		
+		System.out.println(sConfigMap);
 	}
 
 	private static void checkInit() {

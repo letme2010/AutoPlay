@@ -38,6 +38,7 @@ public class UIFlagManager {
 	public static final int TIPS2 = 18;
 	public static final int AUTO_LOGIN_PROTOCOL2 = 19;
 	public static final int MODE_TIPS = 20;
+	public static final int SD_GUNDAM_EXE_PATH = 21;
 
 	static {
 
@@ -104,73 +105,84 @@ public class UIFlagManager {
 		sMap.put(MODE_TIPS, new FlagWrap(425, 291, 459, 296,
 				OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
 				"MODE_TIPS"));
-	}
 
-	private static final List<OnFlagDetetedListener> sListenerList = new ArrayList<OnFlagDetetedListener>();
-
-	public static void addListener(OnFlagDetetedListener aListener) {
-
-		LT.assertTrue(null != aListener);
-		sListenerList.add(aListener);
-	}
-
-	public static void removeListener(OnFlagDetetedListener aListener) {
-		LT.assertTrue(null != aListener);
-		sListenerList.remove(aListener);
-	}
-
-	public interface OnFlagDetetedListener {
-		public void onFlagDetetedSuccess(int aFlag, FlagWrap aFlagWrap);
-
-		public void onFlagDetetedTimeOut(int aFlag, FlagWrap aFlagWrap);
+		sMap.put(SD_GUNDAM_EXE_PATH, new FlagWrap(540, 178, 591, 186,
+				OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
+				"SD_GUNDAM_EXE_PATH"));
 	}
 
 	public static FlagWrap getFlagWrap(int aFlag) {
 		return sMap.get(aFlag);
 	}
 
-	public static void invorkDetect(int aFlag) {
+	public interface Callback {
+		public void onDetectSuccess(int aFlag);
+
+		public void onDetectFail();
+	}
+
+	public static void invorkDetect(int[] aFlagList,
+			UIFlagManager.Callback aCallback) {
 
 		int count = 0;
-
-		FlagWrap flagWrap = UIFlagManager.getFlagWrap(aFlag);
+		boolean isDetected = false;
+		int detectedFlag = -1;
 
 		do {
 
-			BufferedImage image = LtRobot.getInstance().screenShot(flagWrap);
-			BufferedImage flag = UIFlagManager.getImage(flagWrap.getFlagKey());
+			for (int flag : aFlagList) {
 
-			if (Util.compareImageBinary(image, flag)) {
+				FlagWrap flagWrap = UIFlagManager.getFlagWrap(flag);
+				LT.assertTrue(null != flagWrap, "flag:" + flag);
 
-				break;
-			} else {
-				System.out.println("wait " + flagWrap.getFlagKey() + ".");
-				LtRobot.getInstance().delay(1000);
+				System.out.println("try detect " + flagWrap.getFlagKey());
 
-			}
+				BufferedImage flagImage = LtRobot.getInstance().screenShot(
+						flagWrap);
+				BufferedImage shotImage = UIFlagManager.getImage(flagWrap
+						.getFlagKey());
+
+				if (Util.compareImageBinary(flagImage, shotImage)) {
+
+					isDetected = true;
+					detectedFlag = flag;
+
+					System.out.println(flagWrap.getFlagKey()
+							+ " detect success.");
+
+					LtRobot.getInstance().showShotSuccessRect(flagWrap);
+					LtRobot.getInstance().delay(1000);
+					LtRobot.getInstance().hideRect();
+
+					break;
+
+				}
+
+			}// end of for
 
 			count++;
 
-			if (count > ConfigManager.getInt("TIME_OUT_SECOND")) {
-				for (OnFlagDetetedListener listener : sListenerList) {
-					listener.onFlagDetetedTimeOut(aFlag, flagWrap);
+			if (isDetected) {
+
+				if (null != aCallback) {
+					aCallback.onDetectSuccess(detectedFlag);
 				}
 
-				System.out.println(flagWrap.getFlagKey() + " detect fail.");
 				break;
+
+			} else {
+
+				if (ConfigManager.getInt("TIME_OUT_SECOND") < count) {
+					if (null != aCallback) {
+						aCallback.onDetectFail();
+					}
+				}
+
 			}
 
+			LtRobot.getInstance().delay(1000);
+
 		} while (true);
-
-		System.out.println(flagWrap.getFlagKey() + " detect success.");
-
-		LtRobot.getInstance().showShotSuccessRect(flagWrap);
-		LtRobot.getInstance().delay(1000);
-		LtRobot.getInstance().hideRect();
-
-		for (OnFlagDetetedListener listener : sListenerList) {
-			listener.onFlagDetetedSuccess(aFlag, flagWrap);
-		}
 	}
 
 	public static BufferedImage getImage(String aFlagName) {
@@ -179,7 +191,8 @@ public class UIFlagManager {
 		File file = new File(ConfigManager.getString("UI_WAIT_FLAG_FOLDER"),
 				aFlagName + ".png");
 
-		System.out.println(file.getAbsolutePath());
+		System.out.println("load image:" + file.getAbsolutePath());
+
 		LT.assertTrue(file.exists());
 
 		BufferedImage ret = null;
