@@ -68,8 +68,8 @@ public class Main {
 			BufferedImage scriptShotImage = LtRobot.getInstance().screenShot(
 					scriptShotFlagWrap);
 
-			Util.saveImageToFile(scriptShotImage,
-					"C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
+			// Util.saveImageToFile(scriptShotImage,
+			// "C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
 
 			if (Util.compareImage(scriptShotImage, scriptFlagImage)
 					|| Util.compareImage(scriptShotImage, scriptFlagImage2)) {
@@ -441,40 +441,52 @@ public class Main {
 
 						switch (aFlag) {
 						case UIFlagManager.SD_GUNDAM_EXE_PATH: {
-							
+
 							// copy goline path.
 							LtRobot.getInstance().leftClickInScriptUI(574, 183);
 							LtRobot.getInstance().delay(1000);
-							setCopyBoardText(ConfigManager.getString("GOLINE_SD"));
+							setCopyBoardText(ConfigManager
+									.getString("GOLINE_SD"));
 							LtRobot.getInstance().pressCtrlV();
 							LtRobot.getInstance().pressEnter();
-							
+
 							break;
 						}
 						case UIFlagManager.MODE_TIPS: {
-						
+
 							LtRobot.getInstance().leftClickInScriptUI(459, 296);
 							LtRobot.getInstance().delay(1000);
-							
-							UIFlagManager.invorkDetect(new int[]{UIFlagManager.SD_GUNDAM_EXE_PATH}, new UIFlagManager.Callback() {
-								
-								@Override
-								public void onDetectSuccess(int aFlag) {
-									
-									// copy goline path.
-									LtRobot.getInstance().leftClickInScriptUI(574, 183);
-									LtRobot.getInstance().delay(1000);
-									setCopyBoardText(ConfigManager.getString("GOLINE_SD"));
-									LtRobot.getInstance().pressCtrlV();
-									LtRobot.getInstance().pressEnter();									
-								}
-								
-								@Override
-								public void onDetectFail() {
-									// TODO Auto-generated method stub
-									
-								}
-							});
+
+							UIFlagManager
+									.invorkDetect(
+											new int[] { UIFlagManager.SD_GUNDAM_EXE_PATH },
+											new UIFlagManager.Callback() {
+
+												@Override
+												public void onDetectSuccess(
+														int aFlag) {
+
+													// copy goline path.
+													LtRobot.getInstance()
+															.leftClickInScriptUI(
+																	574, 183);
+													LtRobot.getInstance()
+															.delay(1000);
+													setCopyBoardText(ConfigManager
+															.getString("GOLINE_SD"));
+													LtRobot.getInstance()
+															.pressCtrlV();
+													LtRobot.getInstance()
+															.pressEnter();
+												}
+
+												@Override
+												public void onDetectFail() {
+													// TODO Auto-generated
+													// method stub
+
+												}
+											});
 
 							break;
 						}
@@ -537,7 +549,7 @@ public class Main {
 		LtRobot.getInstance().leftClickInScriptUI(504, 204);
 		LtRobot.getInstance().delay(500);
 		LtRobot.getInstance().leftClickInScriptUI(495, 233);
-		
+
 		UIFlagManager.invorkDetect(new int[] { UIFlagManager.MODE_TIPS },
 				new UIFlagManager.Callback() {
 
@@ -562,6 +574,7 @@ public class Main {
 		LtRobot.getInstance().clickKey(KeyEvent.VK_F10);
 
 		System.out.println("finish.");
+		System.exit(0);
 
 	}
 }

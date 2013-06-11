@@ -1,46 +1,37 @@
 package lrg.cxt.lt.deamon;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import org.cxt.lt.Util;
+import org.cxt.lt.util.ConfigManager;
 
 public class Deamon {
 
-	private static final String BUTTON_START_TEXT = "Start";
-	private static final String BUTTON_STOP_TEXT = "Stop";
-	
 	public static void main(String[] args) throws InterruptedException {
 
-		System.out.println("start");
+		// "tasklist /FI "IMAGENAME eq runner.exe""
 
-		
-		JFrame frame = new JFrame();
-		
-		frame.setSize(300, 200);
-		
-		frame.setVisible(true);
-		
-		JButton button = new JButton();
-		button.setText("Start");
-		button.setSize(100, 60);
-		button.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("...");
+		boolean hasCfgParams = false;
+
+		for (int i = 0, len = args.length; i < len; i++) {
+			String arg = args[i];
+
+			if ("-cfg".equals(arg)) {
+				String configFilePath = args[i + 1];
+				System.out.println("-cfg " + configFilePath);
+				ConfigManager.initConfigFilePath(configFilePath);
+				hasCfgParams = true;
 			}
-		});
-		
-		
-		frame.add(button);
-		
-//		do {
-//			Thread.sleep(1000);
-//		} while (true);
+		}
 
-		
+		if (!hasCfgParams) {
+			System.err.println("Please execute me by -cfg params");
+			return;
+		}
+
+		String testSimplayScriptRunningCMD = ConfigManager
+				.getString("TEST_SIMPLAY_SCRIPT_RUNNING_CMD");
+
+//		String msg = Util.exec(testSimplayScriptRunningCMD);
+
 	}
 
 }

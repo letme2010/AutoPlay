@@ -5,11 +5,15 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -212,8 +216,15 @@ public class Util {
 		return ret;
 	}
 
-	public static void exec(String string) throws IOException {
-		Runtime.getRuntime().exec(string);
+	public static String exec(String string) throws IOException {
+		Process process = Runtime.getRuntime().exec(string);
+		InputStream iStream = process.getInputStream();
+
+//		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+//
+//		String line = reader.readLine();
+		
+		return null;
 	}
 
 }
