@@ -47,7 +47,7 @@ public class Main {
 
 		// int greenButtonLeft = 688;
 		// int greenButtonRight = 717;
-		int scanGreenButtonTopLimit = 200;
+		int scanGreenButtonTopLimit = 170;
 		int scanGreenButtonBottomLimit = 530;
 
 		int scriptShotLeft = 688 - 544;
@@ -537,12 +537,13 @@ public class Main {
 		LtRobot.getInstance().leftClickInScriptUI(504, 204);
 		LtRobot.getInstance().delay(500);
 		LtRobot.getInstance().leftClickInScriptUI(495, 233);
+		
 		UIFlagManager.invorkDetect(new int[] { UIFlagManager.MODE_TIPS },
 				new UIFlagManager.Callback() {
 
 					@Override
 					public void onDetectSuccess(int aFlag) {
-						LtRobot.getInstance().leftClickInScriptUI(480, 386);
+						LtRobot.getInstance().leftClickInScriptUI(459, 296);
 					}
 
 					@Override
