@@ -198,7 +198,7 @@ public class Main {
 					}
 
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 
@@ -214,7 +214,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -229,7 +229,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -244,7 +244,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -260,7 +260,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -275,7 +275,8 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
+
 					}
 				});
 
@@ -290,7 +291,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -306,7 +307,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -321,7 +322,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -358,8 +359,7 @@ public class Main {
 
 												@Override
 												public void onDetectFail() {
-													// TODO Auto-generated
-													// method stub
+													LT.assertTrue(false);
 
 												}
 											});
@@ -376,7 +376,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -392,7 +392,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -408,7 +408,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -423,7 +423,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -482,8 +482,7 @@ public class Main {
 
 												@Override
 												public void onDetectFail() {
-													// TODO Auto-generated
-													// method stub
+													LT.assertTrue(false);
 
 												}
 											});
@@ -500,7 +499,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -535,7 +534,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});
@@ -560,7 +559,7 @@ public class Main {
 
 					@Override
 					public void onDetectFail() {
-						// TODO Auto-generated method stub
+						LT.assertTrue(false);
 
 					}
 				});

@@ -173,6 +173,7 @@ public class UIFlagManager {
 			} else {
 
 				if (ConfigManager.getInt("TIME_OUT_SECOND") < count) {
+					
 					if (null != aCallback) {
 						aCallback.onDetectFail();
 					}
