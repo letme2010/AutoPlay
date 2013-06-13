@@ -1,5 +1,8 @@
 import os
+import time
 
 print("AutoPlay start")
 
-os.system("java -jar AutoPlay.jar -cfg C:\Users\letme2010\Documents\GitHub\AutoPlay\res\config.kv")
+while True:
+    os.system("java -jar AutoPlay.jar -cfg C:\\Users\\letme2010\\Desktop\\jdyou\\simplay.exe")
+    time.sleep(1800)

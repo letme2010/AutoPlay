@@ -78,7 +78,7 @@ public class UIFlagManager {
 		sMap.put(SCRIPT_SD_GUNDAM, new FlagWrap(337, 226, 394, 246,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "SCRIPT_SD_GUNDAM"));
 
-		sMap.put(SCRIPT_DISPLAY, new FlagWrap(142, 182, 353, 200,
+		sMap.put(SCRIPT_DISPLAY, new FlagWrap(260, 183, 300, 196,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "SCRIPT_DISPLAY"));
 
 		sMap.put(AUTO_LOGIN_PROTOCOL, new FlagWrap(450, 422, 501, 429,
@@ -142,7 +142,7 @@ public class UIFlagManager {
 				BufferedImage shotImage = UIFlagManager.getImage(flagWrap
 						.getFlagKey());
 
-				if (Util.compareImageBinary(flagImage, shotImage)) {
+				if (Util.compareImage(flagImage, shotImage)) {
 
 					isDetected = true;
 					detectedFlag = flag;
@@ -173,7 +173,7 @@ public class UIFlagManager {
 			} else {
 
 				if (ConfigManager.getInt("TIME_OUT_SECOND") < count) {
-					
+
 					if (null != aCallback) {
 						aCallback.onDetectFail();
 					}

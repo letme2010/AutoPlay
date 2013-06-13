@@ -200,6 +200,7 @@ public class Util {
 		if ((w1 == w2) && (h1 == h2)) {
 			for (int i = 0; i < w1; i += 2) {
 				for (int j = 0; j < h1; j += 2) {
+					
 					if (image1.getRGB(i, j) == image2.getRGB(i, j)) {
 						continue;
 					} else {
