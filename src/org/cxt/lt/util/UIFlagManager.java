@@ -142,7 +142,7 @@ public class UIFlagManager {
 				BufferedImage shotImage = UIFlagManager.getImage(flagWrap
 						.getFlagKey());
 
-				if (Util.compareImage(flagImage, shotImage)) {
+				if (Util.compareImageBinary(flagImage, shotImage)) {
 
 					isDetected = true;
 					detectedFlag = flag;
