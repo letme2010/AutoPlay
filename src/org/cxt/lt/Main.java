@@ -68,8 +68,16 @@ public class Main {
 			BufferedImage scriptShotImage = LtRobot.getInstance().screenShot(
 					scriptShotFlagWrap);
 
-//			Util.saveImageToFile(scriptShotImage,
-//					"C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
+			// Util.saveImageToFile(scriptShotImage,
+			// "C:\\Users\\letme2010\\Desktop\\t\\" + top + ".png");
+
+			{
+				if (1 == ConfigManager.getInt("IS_SAVE_SCRIPT_SCAN_IMAGE")) {
+					Util.saveImageToFile(scriptShotImage,
+							ConfigManager.getString("SHOT_IMAGE_TMP_FOLDER")
+									+ top + ".png");
+				}
+			}
 
 			if (Util.compareImage(scriptShotImage, scriptFlagImage)
 					|| Util.compareImage(scriptShotImage, scriptFlagImage2)) {
