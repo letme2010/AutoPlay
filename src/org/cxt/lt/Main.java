@@ -132,46 +132,6 @@ public class Main {
 		SecureConfigManager.initConfigFilePath(ConfigManager
 				.getString("SECURE_KV_FILE_PATH"));
 
-		/**
-		 * Remove simplay bin folder.
-		 */
-		if (false) {
-			final List<String> unDeleteFileList = new ArrayList<String>();
-			unDeleteFileList.add("img");
-			unDeleteFileList.add("AutoPlay.jar");
-			unDeleteFileList.add("config.kv");
-			unDeleteFileList.add("exit.exe");
-			unDeleteFileList.add("exit.py");
-			unDeleteFileList.add("secure.kv");
-
-			String simplayPath = ConfigManager.getString("SIMPLE_PLAY_PATH");
-			LT.assertTrue(new File(simplayPath).exists(), simplayPath
-					+ " is not exists.");
-			File simplayBinFolder = new File(new File(simplayPath).getParent(),
-					"bin");
-			if (simplayBinFolder.exists() && simplayBinFolder.isDirectory()) {
-				// Util.deleteFolder(simplayFolder.getAbsolutePath());
-				String[] deleteList = simplayBinFolder
-						.list(new FilenameFilter() {
-
-							@Override
-							public boolean accept(File dir, String name) {
-
-								if (unDeleteFileList.contains(name)) {
-									return false;
-								} else {
-									return true;
-								}
-							}
-						});
-
-				for (String deleteFilePath : deleteList) {
-					Util.deleteFile(simplayBinFolder.getAbsolutePath()
-							+ File.separatorChar + deleteFilePath);
-				}
-			}
-		}
-
 		// kill something...
 
 		Util.exec("taskkill /f /im "
@@ -212,73 +172,13 @@ public class Main {
 
 				});
 
-		UIFlagManager.invorkDetect(new int[] { UIFlagManager.SCRIPT_LIB },
-				new UIFlagManager.Callback() {
-
-					@Override
-					public void onDetectSuccess(int aFlag) {
-						LtRobot.getInstance().leftClickInMainWindow(136, 70);
-					}
-
-					@Override
-					public void onDetectFail() {
-						LT.assertTrue(false);
-
-					}
-				});
-
-		UIFlagManager.invorkDetect(new int[] { UIFlagManager.SELECTE_SCRIPT2 },
-				new UIFlagManager.Callback() {
-
-					@Override
-					public void onDetectSuccess(int aFlag) {
-						LtRobot.getInstance().leftClickInMainWindow(42, 137);
-					}
-
-					@Override
-					public void onDetectFail() {
-						LT.assertTrue(false);
-
-					}
-				});
-
-		UIFlagManager.invorkDetect(new int[] { UIFlagManager.S_WORD_START },
-				new UIFlagManager.Callback() {
-
-					@Override
-					public void onDetectSuccess(int aFlag) {
-						LtRobot.getInstance().leftClickInMainWindow(558, 168);
-					}
-
-					@Override
-					public void onDetectFail() {
-						LT.assertTrue(false);
-
-					}
-				});
-
 		UIFlagManager.invorkDetect(
-				new int[] { UIFlagManager.SCRIPT_SD_GUNDAM },
+				new int[] { UIFlagManager.MY_COLLECTION_DEFAULT_SCRIPT_OPEN },
 				new UIFlagManager.Callback() {
 
 					@Override
 					public void onDetectSuccess(int aFlag) {
-						LtRobot.getInstance().leftClickInMainWindow(368, 236);
-					}
-
-					@Override
-					public void onDetectFail() {
-						LT.assertTrue(false);
-
-					}
-				});
-
-		UIFlagManager.invorkDetect(new int[] { UIFlagManager.SCRIPT_DISPLAY },
-				new UIFlagManager.Callback() {
-
-					@Override
-					public void onDetectSuccess(int aFlag) {
-						waitScript();
+						LtRobot.getInstance().leftClickInMainWindow(522, 343);
 					}
 
 					@Override

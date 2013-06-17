@@ -39,6 +39,7 @@ public class UIFlagManager {
 	public static final int AUTO_LOGIN_PROTOCOL2 = 19;
 	public static final int MODE_TIPS = 20;
 	public static final int SD_GUNDAM_EXE_PATH = 21;
+	public static final int MY_COLLECTION_DEFAULT_SCRIPT_OPEN = 22;
 
 	static {
 
@@ -109,6 +110,10 @@ public class UIFlagManager {
 		sMap.put(SD_GUNDAM_EXE_PATH, new FlagWrap(540, 178, 591, 186,
 				OffsetType.SIMPLAY_RED_KILLER_BACKGROUND_SCRIPT_WINDOW,
 				"SD_GUNDAM_EXE_PATH"));
+
+		sMap.put(MY_COLLECTION_DEFAULT_SCRIPT_OPEN, new FlagWrap(495, 331, 522,
+				343, OffsetType.SIMPLAY_MAIN_WINDOW,
+				"MY_COLLECTION_DEFAULT_SCRIPT_OPEN"));
 	}
 
 	public static FlagWrap getFlagWrap(int aFlag) {
