@@ -173,6 +173,22 @@ public class Main {
 				});
 
 		UIFlagManager.invorkDetect(
+				new int[] { UIFlagManager.WAIT_MY_COLLECTION_UI },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInMainWindow(419, 304);
+					}
+
+					@Override
+					public void onDetectFail() {
+						LT.assertTrue(false);
+
+					}
+				});
+
+		UIFlagManager.invorkDetect(
 				new int[] { UIFlagManager.MY_COLLECTION_DEFAULT_SCRIPT_OPEN },
 				new UIFlagManager.Callback() {
 

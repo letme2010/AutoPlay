@@ -40,6 +40,7 @@ public class UIFlagManager {
 	public static final int MODE_TIPS = 20;
 	public static final int SD_GUNDAM_EXE_PATH = 21;
 	public static final int MY_COLLECTION_DEFAULT_SCRIPT_OPEN = 22;
+	public static final int WAIT_MY_COLLECTION_UI = 23;
 
 	static {
 
@@ -114,6 +115,9 @@ public class UIFlagManager {
 		sMap.put(MY_COLLECTION_DEFAULT_SCRIPT_OPEN, new FlagWrap(495, 331, 522,
 				343, OffsetType.SIMPLAY_MAIN_WINDOW,
 				"MY_COLLECTION_DEFAULT_SCRIPT_OPEN"));
+
+		sMap.put(WAIT_MY_COLLECTION_UI, new FlagWrap(492, 296, 523, 312,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "WAIT_MY_COLLECTION_UI"));
 	}
 
 	public static FlagWrap getFlagWrap(int aFlag) {

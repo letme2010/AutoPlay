@@ -4,5 +4,5 @@ import time
 print("AutoPlay start")
 
 while True:
-    os.system("java -jar AutoPlay.jar -cfg C:\\Users\\letme2010\\Desktop\\Jdyou\\bin\\config.kv")
+    os.system("java -jar C:\\Users\\letme2010\\Documents\\GitHub\\AutoPlay\\res\\AutoPlay.jar -cfg C:\\Users\\letme2010\\Documents\\GitHub\\AutoPlay\\res\\letme2008\\config.kv")
     time.sleep(1800)
