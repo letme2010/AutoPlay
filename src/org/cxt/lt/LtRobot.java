@@ -67,6 +67,11 @@ public class LtRobot {
 
 	}
 
+	public void leftClickInLoginUI(int x, int y) {
+		Point leftTopOffset = LtRobot.getLoginUILeftTopOffset();
+		this.leftClick(leftTopOffset.x + x, leftTopOffset.y + y);
+	}
+
 	public void leftClickInMainWindow(int x, int y) {
 
 		Point leftTopOffset = LtRobot.getLeftTopOffset();
@@ -188,9 +193,8 @@ public class LtRobot {
 				aFlagWrap.getRight(), aFlagWrap.getBottom());
 	}
 
-
 	public BufferedImage screenShot(int left, int top, int right, int bottom) {
-		
+
 		this.showShotWaitRect(left, top, right, bottom);
 		this.delay(10);
 		this.hideRect();
@@ -249,5 +253,4 @@ public class LtRobot {
 	public void hideRect() {
 		mFrame.setVisible(false);
 	}
-
 }

@@ -146,6 +146,22 @@ public class Main {
 
 		// execute action.
 
+		UIFlagManager.invorkDetect(new int[] { UIFlagManager.LOGIN_UI },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().delay(1000);
+						LtRobot.getInstance().leftClickInLoginUI(143, 13);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
 		UIFlagManager.invorkDetect(new int[] { UIFlagManager.LOGIN_WAIT_FLAG },
 				new UIFlagManager.Callback() {
 
