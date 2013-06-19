@@ -152,7 +152,7 @@ public class Main {
 					@Override
 					public void onDetectSuccess(int aFlag) {
 						LtRobot.getInstance().delay(1000);
-						LtRobot.getInstance().leftClickInLoginUI(143, 13);
+						LtRobot.getInstance().leftClickInLoginUI(320, 11);
 					}
 
 					@Override
