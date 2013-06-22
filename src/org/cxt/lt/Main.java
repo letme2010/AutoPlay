@@ -6,14 +6,19 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.cxt.lt.util.ConfigManager;
 import org.cxt.lt.util.LT;
 import org.cxt.lt.util.SecureConfigManager;
 import org.cxt.lt.util.UIFlagManager;
 import org.cxt.lt.util.UIFlagManager.FlagWrap;
+
+import com.sun.org.apache.xpath.internal.operations.Lte;
 
 public class Main {
 
@@ -198,17 +203,6 @@ public class Main {
 
 					}
 				});
-
-		{
-			BufferedImage image = LtRobot
-					.getInstance()
-					.screenShot(
-							UIFlagManager
-									.getFlagWrap(UIFlagManager.MY_COLLECTION_DEFAULT_SCRIPT_OPEN));
-
-			Util.saveImageToDefaultFile(image);
-
-		}
 
 		UIFlagManager.invorkDetect(
 				new int[] { UIFlagManager.MY_COLLECTION_DEFAULT_SCRIPT_OPEN },
@@ -518,7 +512,7 @@ public class Main {
 		// start Game
 		LtRobot.getInstance().clickKey(KeyEvent.VK_F10);
 
-		System.out.println("finish at " + new Date().toString());
+		System.out.println("finish.");
 		System.exit(0);
 
 	}
