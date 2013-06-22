@@ -1,0 +1,1 @@
+python C:\Users\letme2010\Documents\GitHub\AutoPlay\res\letme2008\exit.py
