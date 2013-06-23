@@ -188,6 +188,7 @@ public class Main {
 
 				});
 
+		
 		UIFlagManager.invorkDetect(
 				new int[] { UIFlagManager.WAIT_MY_COLLECTION_UI },
 				new UIFlagManager.Callback() {
