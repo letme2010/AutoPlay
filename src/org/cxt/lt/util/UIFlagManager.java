@@ -117,7 +117,7 @@ public class UIFlagManager {
 				343, OffsetType.SIMPLAY_MAIN_WINDOW,
 				"MY_COLLECTION_DEFAULT_SCRIPT_OPEN"));
 
-		sMap.put(WAIT_MY_COLLECTION_UI, new FlagWrap(441, 295, 546, 320,
+		sMap.put(WAIT_MY_COLLECTION_UI, new FlagWrap(482,283,554,320,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "WAIT_MY_COLLECTION_UI"));
 
 		sMap.put(LOGIN_UI, new FlagWrap(328, 10, 343, 19,
