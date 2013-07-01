@@ -3,9 +3,7 @@ package org.cxt.lt.util;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -42,6 +40,7 @@ public class UIFlagManager {
 	public static final int MY_COLLECTION_DEFAULT_SCRIPT_OPEN = 22;
 	public static final int WAIT_MY_COLLECTION_UI = 23;
 	public static final int LOGIN_UI = 24;
+	public static final int ERROR_CODE_113 = 25;
 
 	static {
 
@@ -117,11 +116,15 @@ public class UIFlagManager {
 				343, OffsetType.SIMPLAY_MAIN_WINDOW,
 				"MY_COLLECTION_DEFAULT_SCRIPT_OPEN"));
 
-		sMap.put(WAIT_MY_COLLECTION_UI, new FlagWrap(482,283,554,320,
+		sMap.put(WAIT_MY_COLLECTION_UI, new FlagWrap(482, 283, 554, 320,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "WAIT_MY_COLLECTION_UI"));
 
 		sMap.put(LOGIN_UI, new FlagWrap(328, 10, 343, 19,
 				OffsetType.SIMPLAY_LOGIN_WINDOW_OFFSET, "LOGIN_UI"));
+
+		sMap.put(ERROR_CODE_113, new FlagWrap(214, 187, 310, 202,
+				OffsetType.SIMPLAY_MAIN_WINDOW, "ERROR_CODE_113"));
+
 	}
 
 	public static FlagWrap getFlagWrap(int aFlag) {
@@ -155,10 +158,10 @@ public class UIFlagManager {
 				BufferedImage shotImage = UIFlagManager.getImage(flagWrap
 						.getFlagKey());
 
-//				if (Util.compareImageBinary(flagImage, shotImage)) {
+				// if (Util.compareImageBinary(flagImage, shotImage)) {
 
 				if (Util.compareImage(flagImage, shotImage)) {
-				
+
 					isDetected = true;
 					detectedFlag = flag;
 

@@ -5,15 +5,12 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -118,7 +115,13 @@ public class Util {
 				deleteFile(path + File.separatorChar + list[i]);// 先删除目录下的文件
 			}
 		}
-		f.delete();
+
+		try {
+			f.delete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -200,7 +203,7 @@ public class Util {
 		if ((w1 == w2) && (h1 == h2)) {
 			for (int i = 0; i < w1; i += 2) {
 				for (int j = 0; j < h1; j += 2) {
-					
+
 					if (image1.getRGB(i, j) == image2.getRGB(i, j)) {
 						continue;
 					} else {
@@ -221,10 +224,11 @@ public class Util {
 		Process process = Runtime.getRuntime().exec(string);
 		InputStream iStream = process.getInputStream();
 
-//		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//
-//		String line = reader.readLine();
-		
+		// BufferedReader reader = new BufferedReader(new
+		// InputStreamReader(in));
+		//
+		// String line = reader.readLine();
+
 		return null;
 	}
 
