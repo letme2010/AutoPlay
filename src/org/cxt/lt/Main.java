@@ -6,19 +6,14 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import org.cxt.lt.util.ConfigManager;
 import org.cxt.lt.util.LT;
 import org.cxt.lt.util.SecureConfigManager;
 import org.cxt.lt.util.UIFlagManager;
 import org.cxt.lt.util.UIFlagManager.FlagWrap;
-
-import com.sun.org.apache.xpath.internal.operations.Lte;
 
 public class Main {
 
@@ -102,15 +97,7 @@ public class Main {
 		Util.saveImageToDefaultFile(image);
 	}
 
-	/**
-	 * @param args
-	 * 
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
-	public static void main(String[] args) throws IOException,
-			InterruptedException {
-
+	private static void mainFunction(String[] args) throws Exception {
 		boolean hasCfgParams = false;
 
 		for (int i = 0, len = args.length; i < len; i++) {
@@ -188,7 +175,6 @@ public class Main {
 
 				});
 
-		
 		UIFlagManager.invorkDetect(
 				new int[] { UIFlagManager.WAIT_MY_COLLECTION_UI },
 				new UIFlagManager.Callback() {
@@ -512,6 +498,38 @@ public class Main {
 
 		// start Game
 		LtRobot.getInstance().clickKey(KeyEvent.VK_F10);
+
+	}
+
+	/**
+	 * @param args
+	 * 
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public static void main(String[] args) {
+
+		boolean goon = true;
+
+		while (goon) {
+			try {
+
+				mainFunction(args);
+				goon = false;
+
+			} catch (Exception e) {
+				goon = true;
+
+				System.err.println("[" + new Date().toGMTString() + "]:"
+						+ e.getMessage());
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		}
 
 		System.out.println("finish.");
 		System.exit(0);
