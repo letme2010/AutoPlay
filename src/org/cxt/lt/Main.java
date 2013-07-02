@@ -182,30 +182,12 @@ public class Main {
 					public void onDetectSuccess(int aFlag) {
 						LtRobot.getInstance().delay(1000);
 						LtRobot.getInstance().leftClickInLoginUI(320, 11);
+						LtRobot.getInstance().delay(1000);
 					}
 
 					@Override
-					public void onDetectFail() {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-		UIFlagManager.invorkDetect(
-				new int[] { UIFlagManager.LOGIN_CHANNEL_SELECTE },
-				new UIFlagManager.Callback() {
-
-					@Override
-					public void onDetectSuccess(int aFlag) {
-						LtRobot.getInstance().leftClickInLoginUI(146, 199);
-						LtRobot.getInstance().delay(500);
-						LtRobot.getInstance().leftClickInLoginUI(116, 226);
-					}
-
-					@Override
-					public void onDetectFail() {
-						// TODO Auto-generated method stub
-
+					public void onDetectTimeOver() {
+						LT.assertTrue(false);
 					}
 				});
 
@@ -228,10 +210,36 @@ public class Main {
 						LtRobot.getInstance().pressCtrlV();
 						LtRobot.getInstance().delay(500);
 
+						UIFlagManager
+								.invorkDetect(
+										new int[] { UIFlagManager.LOGIN_CHANNEL_SELECTE },
+										new UIFlagManager.Callback() {
+
+											@Override
+											public void onDetectSuccess(
+													int aFlag) {
+												LtRobot.getInstance()
+														.leftClickInLoginUI(
+																146, 199);
+												LtRobot.getInstance()
+														.delay(500);
+												LtRobot.getInstance()
+														.leftClickInLoginUI(
+																116, 226);
+												LtRobot.getInstance()
+														.delay(500);
+											}
+
+											@Override
+											public void onDetectTimeOver() {
+												LT.assertTrue(false);
+											}
+										});
+
 						LtRobot.getInstance().pressEnter();
 					}
 
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -248,7 +256,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -285,7 +293,7 @@ public class Main {
 			}
 
 			@Override
-			public void onDetectFail() {
+			public void onDetectTimeOver() {
 				LT.assertTrue(false);
 
 			}
@@ -301,7 +309,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -317,7 +325,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -332,7 +340,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -369,7 +377,7 @@ public class Main {
 												}
 
 												@Override
-												public void onDetectFail() {
+												public void onDetectTimeOver() {
 													LT.assertTrue(false);
 
 												}
@@ -386,7 +394,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -402,7 +410,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -418,7 +426,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -433,7 +441,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -491,7 +499,7 @@ public class Main {
 												}
 
 												@Override
-												public void onDetectFail() {
+												public void onDetectTimeOver() {
 													LT.assertTrue(false);
 
 												}
@@ -508,7 +516,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -543,7 +551,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}
@@ -568,7 +576,7 @@ public class Main {
 					}
 
 					@Override
-					public void onDetectFail() {
+					public void onDetectTimeOver() {
 						LT.assertTrue(false);
 
 					}

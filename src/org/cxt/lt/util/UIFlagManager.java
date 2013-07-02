@@ -140,7 +140,7 @@ public class UIFlagManager {
 	public interface Callback {
 		public void onDetectSuccess(int aFlag);
 
-		public void onDetectFail();
+		public void onDetectTimeOver();
 	}
 
 	public static void invorkDetect(int[] aFlagList,
@@ -199,7 +199,7 @@ public class UIFlagManager {
 				if (ConfigManager.getInt("TIME_OUT_SECOND") < count) {
 
 					if (null != aCallback) {
-						aCallback.onDetectFail();
+						aCallback.onDetectTimeOver();
 					}
 				}
 
