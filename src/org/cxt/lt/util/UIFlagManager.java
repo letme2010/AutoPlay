@@ -41,6 +41,7 @@ public class UIFlagManager {
 	public static final int WAIT_MY_COLLECTION_UI = 23;
 	public static final int LOGIN_UI = 24;
 	public static final int ERROR_CODE_113 = 25;
+	public static final int LOGIN_CHANNEL_SELECTE = 26;
 
 	static {
 
@@ -124,6 +125,11 @@ public class UIFlagManager {
 
 		sMap.put(ERROR_CODE_113, new FlagWrap(214, 187, 310, 202,
 				OffsetType.SIMPLAY_MAIN_WINDOW, "ERROR_CODE_113"));
+
+		sMap.put(LOGIN_CHANNEL_SELECTE,
+				new FlagWrap(137, 190, 146, 199,
+						OffsetType.SIMPLAY_LOGIN_WINDOW_OFFSET,
+						"LOGIN_CHANNEL_SELECTE"));
 
 	}
 

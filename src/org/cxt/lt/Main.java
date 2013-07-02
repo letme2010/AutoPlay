@@ -191,6 +191,24 @@ public class Main {
 					}
 				});
 
+		UIFlagManager.invorkDetect(
+				new int[] { UIFlagManager.LOGIN_CHANNEL_SELECTE },
+				new UIFlagManager.Callback() {
+
+					@Override
+					public void onDetectSuccess(int aFlag) {
+						LtRobot.getInstance().leftClickInLoginUI(146, 199);
+						LtRobot.getInstance().delay(500);
+						LtRobot.getInstance().leftClickInLoginUI(116, 226);
+					}
+
+					@Override
+					public void onDetectFail() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
 		UIFlagManager.invorkDetect(new int[] { UIFlagManager.LOGIN_WAIT_FLAG },
 				new UIFlagManager.Callback() {
 
@@ -198,7 +216,7 @@ public class Main {
 						setCopyBoardText(SimplayUserManager.getUserName());
 						LtRobot.getInstance().pressCtrlV();
 						LtRobot.getInstance().delay(500);
-						
+
 						LtRobot.getInstance().clickKey(KeyEvent.VK_SPACE);
 						LtRobot.getInstance().delay(200);
 
@@ -257,7 +275,7 @@ public class Main {
 
 					// delete bin folder.
 					deleteSimplayBinFolderIfExists();
-					
+
 					LT.assertTrue(false, "Error code 113.");
 
 				} else {
